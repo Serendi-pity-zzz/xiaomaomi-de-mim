@@ -1,0 +1,95 @@
+{
+  "purpose": "B × A 联调：A 的艺术融合载体上，公开扫码与秘密恢复是否互相不破坏",
+  "input": {
+    "path": "outputs/a_assets/outputs__qr_test__case_1_H_level_with_cat.png",
+    "source": "A 的 PR #1 outputs/qr_test/case_1_H_level_with_cat.png（只读快照，不进仓库）",
+    "sha256": "0fb1dc04d1ce3760c832ff93c19b68002634d6897ddc381308bfcf8b218cccca",
+    "size": [
+      610,
+      410
+    ],
+    "mode": "RGB"
+  },
+  "cat1_region": [
+    430,
+    32,
+    160,
+    200
+  ],
+  "capacity_bytes": 11960,
+  "cat1_region_distinct_colors": 1,
+  "cat1_region_note": "该区域是纯白底（A 的 protected_mask 保护导致猫图不覆盖）。在此写 LSB 会留下明显统计特征，C 的检测模块容易命中；这是 CAT1 固定区域的固有代价，不是嵌入错误。",
+  "environment": {
+    "python": "3.13.14",
+    "Pillow": "13.0.0",
+    "qrcode": "8.2",
+    "pyzbar": "0.1.9"
+  },
+  "scan_before_embed": {
+    "status": "passed",
+    "texts": [
+      "https://example.com/hello"
+    ],
+    "detail": "pyzbar 程序解码；不是手机扫码"
+  },
+  "secret_bytes": 28,
+  "cases": [
+    {
+      "key_mode": "empty",
+      "png_bytes": 76115,
+      "metadata": {
+        "format": "CAT1",
+        "algorithm": "lsb-sequential",
+        "region": [
+          430,
+          32,
+          160,
+          200
+        ],
+        "payload_bytes": 28
+      },
+      "scan_after_embed": {
+        "status": "passed",
+        "texts": [
+          "https://example.com/hello"
+        ],
+        "detail": "pyzbar 程序解码；不是手机扫码"
+      },
+      "public_text_unchanged": true,
+      "secret_status": "passed",
+      "detail": "消息完整；不代表整幅图像完整",
+      "secret_recovered": true,
+      "pixels_changed_outside_cat1_region": 0,
+      "passed": true
+    },
+    {
+      "key_mode": "keyed",
+      "png_bytes": 77365,
+      "metadata": {
+        "format": "CAT1",
+        "algorithm": "lsb-keyed",
+        "region": [
+          430,
+          32,
+          160,
+          200
+        ],
+        "payload_bytes": 28
+      },
+      "scan_after_embed": {
+        "status": "passed",
+        "texts": [
+          "https://example.com/hello"
+        ],
+        "detail": "pyzbar 程序解码；不是手机扫码"
+      },
+      "public_text_unchanged": true,
+      "secret_status": "passed",
+      "detail": "消息完整；不代表整幅图像完整",
+      "secret_recovered": true,
+      "pixels_changed_outside_cat1_region": 0,
+      "passed": true
+    }
+  ],
+  "overall": "passed"
+}
