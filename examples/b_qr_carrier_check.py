@@ -72,7 +72,8 @@ def main() -> int:
         "--output",
         type=Path,
         default=ROOT / "outputs" / "b_qr_carrier_results.json",
-        help="JSON 结果路径，默认写入 outputs/（被 Git 忽略）",
+        help="JSON 结果路径，默认写入 outputs/（被 Git 忽略）；"
+        "要生成仓库内快照请用 --output examples/b_qr_carrier_results.json",
     )
     args = parser.parse_args()
 

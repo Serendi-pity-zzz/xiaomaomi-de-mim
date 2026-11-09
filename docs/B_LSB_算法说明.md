@@ -4,7 +4,7 @@
 
 ## 1. 输入、输出和调用
 
-依赖 Python 3.10+、Pillow（仓库 requirements.txt 固定 13.0.0）。模块文件为 core/steganography.py；测试为 tests/test_steganography.py 与 tests/test_steganography_compat.py；示例为 examples/b_lsb_demo.py、examples/b_qr_carrier_check.py。模块本身不依赖二维码生成库，输入是调用方提供的 Pillow Image。返回的 image 是独立 RGB 图像，原始 image 不被修改。
+依赖 Python 3.10+、Pillow（仓库 requirements.txt 固定 13.0.0）。模块文件为 core/steganography.py；测试为 tests/test_steganography.py 与 tests/test_steganography_compat.py；示例为 examples/b_lsb_demo.py、examples/b_qr_carrier_check.py、examples/b_a_carrier_check.py；仓库内实测记录为 examples/b_qr_carrier_results.json、examples/b_a_carrier_results.json。模块本身不依赖二维码生成库，输入是调用方提供的 Pillow Image。返回的 image 是独立 RGB 图像，原始 image 不被修改。
 
 - capacity_bytes(image, region=None) -> int：验证 CAT1 尺寸与区域，返回净载荷容量 11960 UTF-8 字节。
 - embed(image, secret: str, key: str = "", region=None) -> dict：返回 image、capacity_bytes、metadata。metadata 仅含 format、algorithm、region、payload_bytes，不保存密钥或秘密。
@@ -75,9 +75,21 @@ python examples/b_qr_carrier_check.py
 
 该脚本用现有 MVP 二维码载体（`core.baseline.generate`）分别跑两条链路：pyzbar 真实解码公开文本并与原文比对；B 模块在 PNG 写盘重开后恢复秘密。同时逐字节确认二维码区域和猫咪条带两侧各 20px 保留区未被改动。结果写入 `outputs/b_qr_carrier_results.json`（被 Git 忽略），只记录 `key_mode`，不写密钥值。缺 pyzbar 时扫码状态为 `unverified`，脚本返回非零，绝不记为通过。**该载体是二维码与条带并置的 MVP 图，不是 A 待交付的艺术融合图；程序解码也不等于手机扫码。**
 
+A 的艺术融合载体联调（2026-11-09 新增）：
+
+~~~powershell
+python examples/b_a_carrier_check.py --image <A 生成的 PNG>
+~~~
+
+`examples/b_a_carrier_check.py` 只读 A 的产物图，不修改 A 的模块、不依赖 numpy。用 `--image` 指定 A 的 PR #1 中 `outputs/qr_test/case_1_H_level_with_cat.png`，即可验证 B 在真实融合图上嵌入后公开文本仍可解码、秘密可恢复、CAT1 区域之外像素零改动。缺 pyzbar 时扫码标 `unverified` 并返回非零。结果写入 `examples/b_a_carrier_results.json`（进仓库，只记 `key_mode`，不写密钥）。A 的素材本身未被本仓库收录，JSON 中记录了输入 SHA-256 便于追溯；A 的 PR 合入 `main` 后，可把 `core.qr_generator.generate()` 的输出另存为 PNG 传给同一脚本复测。两个脚本默认把运行时结果写到 `outputs/`（被 Git 忽略），仓库内的 `examples/*_results.json` 是用 `--output` 生成的快照，供组员 clone 后直接查看，无需重跑。
+
 测试覆盖空消息、中文与 emoji、最大容量、UTF-8 字节边界、原图不变、PNG 重存、错误密钥、无标记图、消息位破坏、长度与标记破坏、截断 PNG、无效类型、固定区域、像素读取异常。两个 SHA-256 像素向量来自原 `core/baseline.py`。`tests/test_steganography_compat.py` 另外固化了与原基线的双向兼容：6 组组合输出像素逐字节一致，PNG 重存后旧/新模块互相提取一致，容量异常行为一致。
 
-本轮实测（2026-11-09，Python 3.13.14 / Pillow 13.0.0 / qrcode 8.2 / pyzbar 0.1.9）：全套 `15/15` 通过；示例脚本 `status=passed`；双链路实测两种密钥模式均 `passed`，二维码区域逐字节不变。上轮环境为 Python 3.12.14，像素向量一致，说明该版本区间内 `random.Random` 置乱可复现；跨语言仍不保证。完整命令、输出与复审结论见 `B_LSB_交接.md`。
+本轮实测（2026-11-09，Python 3.13.14 / Pillow 13.0.0 / qrcode 8.2 / pyzbar 0.1.9）：全套 `15/15` 通过；示例脚本 `status=passed`；MVP 二维码载体双链路两种密钥模式均 `passed`，二维码区域逐字节不变。
+
+A 真图联调实测（同一环境，记录见 `examples/b_a_carrier_results.json`）：输入 610×410 RGB 艺术融合图，公开文本 `https://example.com/hello`，CAT1 区域 `(430,32,160,200)`；空密钥与带密钥两种模式下，嵌入前后 pyzbar 均解码出同一公开文本，`extract` 均 `passed` 且 UTF-8 原文一致，CAT1 区域之外被改动的像素数均为 **0**。**注意该区域 32000 个像素原本全是纯白 `(255,255,255)`**（A 的 `protected_mask` 使猫图不覆盖此区），写入 LSB 后统计特征明显，C 的检测模块容易命中；这是 CAT1 固定区域的固有代价，不是嵌入错误，联调时应主动说明。该结论仍基于 pyzbar 程序解码，不是手机扫码，也不替代 A 的正式验收。
+
+上轮环境为 Python 3.12.14，像素向量一致，说明该版本区间内 `random.Random` 置乱可复现；跨语言仍不保证。完整命令、输出与复审结论见 `B_LSB_交接.md`。
 
 ## 5. 给组长与 A/G 的接口说明
 
@@ -86,4 +98,27 @@ python examples/b_qr_carrier_check.py
 - B 的 metadata 是说明性数据，不是提取必需状态。提取端由图像宽度和 key 恢复位置；PNG 中自带 CAT1 标记和消息长度。
 - G 的新置乱或自适应策略须有独立格式/算法标识，不得复用 CAT1 并悄悄改变位置规则。
 - 组长接入时将 embed(...) 的 image 编码为 PNG Base64，并把 ValueError 映射为已处理的 400；保持现有 /api/generate 与 /api/extract 协议。接入后重新验证扫码和秘密恢复两条链路。
-- 本轮已用现有 MVP 二维码载体完成「程序扫码 + 秘密恢复」双链路实测（`examples/b_qr_carrier_check.py`）。A 交付艺术融合载体后，需把该载体替换进同一脚本重跑，并补手机扫码记录；B 不修改 `core/service.py`。
+
+供 `core/service.py` 改写的适配示例（**B 不修改服务层**，以下只是交接参考）：
+
+~~~python
+# 现状：from .baseline import generate, embed, extract
+from .baseline import generate                       # 原始载体仍由 A / 组长提供
+from .steganography import embed as lsb_embed, extract as lsb_extract
+
+def hide(image, secret, key=""):
+    try:
+        return lsb_embed(image, secret, key)["image"]  # 返回 dict，需取 ["image"]
+    except ValueError as exc:                          # 容量 / 尺寸 / region 不合法
+        raise BadRequest(str(exc)) from exc            # BadRequest = 服务层已有的 400 异常类型
+
+def reveal(image, key=""):
+    result = lsb_extract(image, key)                   # 不抛异常，返回三态
+    return {"status": result["status"],
+            "secret": result["secret"],
+            "detail": result["detail"]}
+~~~
+
+三个易错点：`embed` 返回 dict 而不是 Image；`extract` 的 `passed / failed / unknown` 三态要原样透传给 `/api/extract`，不能把 `unknown` 当成功；PNG→Base64 与 `Image.open` 仍在 `app.py`，B 模块只接收和返回 Pillow Image。接入后请重跑 `python -m unittest discover -s tests -v`、两个 `examples/*_check.py`，并补一条真实 HTTP 链路验收。
+
+- 已用现有 MVP 二维码载体（`examples/b_qr_carrier_check.py`）与 A 的艺术融合真图（`examples/b_a_carrier_check.py`）分别完成「程序扫码 + 秘密恢复」双链路实测，均为 2/2 通过。**手机扫码记录仍待补**；A 的 PR 合入 `main` 后应以 `core.qr_generator.generate()` 的现场输出再复测一次。B 不修改 `core/service.py`。

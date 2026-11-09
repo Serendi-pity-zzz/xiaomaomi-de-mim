@@ -36,8 +36,11 @@
 | `tests/test_steganography_compat.py` | 本轮新增 | 与原 `baseline.py` 的双向兼容回归（3 项） |
 | `examples/b_lsb_demo.py` | 上轮移植，未改 | 可重复生成合成 CAT1 PNG 并校验 |
 | `examples/b_lsb_cat1.png` | 上轮移植，未改 | 240×240 合成载体样例（非二维码） |
-| `examples/b_qr_carrier_check.py` | 本轮新增 | 真实二维码载体双链路实测 |
-| `docs/B_LSB_算法说明.md` | 上轮移植 + 本轮更新 | 接口、协议、异常、集成约定与局限 |
+| `examples/b_qr_carrier_check.py` | 本轮新增 | MVP 二维码载体双链路实测 |
+| `examples/b_a_carrier_check.py` | 本轮新增 | A 艺术融合真图的双链路联调（只读 A 素材，不依赖 numpy） |
+| `examples/b_qr_carrier_results.json` | 本轮新增 | MVP 双链路实测快照（进仓库，只记 key_mode） |
+| `examples/b_a_carrier_results.json` | 本轮新增 | A 真图联调实测快照（进仓库，含输入 SHA-256） |
+| `docs/B_LSB_算法说明.md` | 上轮移植 + 本轮更新 | 接口、协议、异常、**服务层适配示例**与局限 |
 | `docs/B_LSB_PPT内容.md` | 上轮移植 + 本轮更新 | 答辩第 5 页文案（按统一框架） |
 | `docs/B_LSB_交接.md` | 本文件 | 复审、移植、实测与剩余待办 |
 
@@ -53,8 +56,11 @@ python -m pip install --target .deps pyzbar   # 可选：启用真实扫码解�
 python -m unittest discover -s tests -v
 python examples/b_lsb_demo.py
 python examples/b_qr_carrier_check.py
-python -m py_compile core/steganography.py tests/test_steganography.py tests/test_steganography_compat.py examples/b_lsb_demo.py examples/b_qr_carrier_check.py
+python examples/b_a_carrier_check.py --image <A 生成的 PNG>   # 需 A 的融合图，见第 4 节
+python -m py_compile core/steganography.py tests/test_steganography.py tests/test_steganography_compat.py examples/b_lsb_demo.py examples/b_qr_carrier_check.py examples/b_a_carrier_check.py
 ```
+
+仓库内 `examples/*_results.json` 是实测快照：`b_qr_carrier_check.py` 与 `b_a_carrier_check.py` 都支持 `--output`，默认写到被忽略的 `outputs/`，指定 `--output examples/...` 即可刷新快照。
 
 本轮环境：Python 3.13.14、Pillow 13.0.0、qrcode 8.2、pyzbar 0.1.9（后两者装在项目 `.deps`，被 Git 忽略）。未安装 pyzbar 时扫码状态为 `unverified`，脚本返回非零，不会伪装成通过。
 
@@ -66,6 +72,7 @@ python -m py_compile core/steganography.py tests/test_steganography.py tests/tes
 | `python -m unittest discover -s tests -p test_steganography.py -v` | B 单测 10/10 通过 |
 | `python examples/b_lsb_demo.py --output outputs/b_lsb_cat1_regen.png` | `status=passed`、`payload_bytes=10`、`capacity_bytes=11960`；重新生成的 PNG 与交付样例 SHA-256 完全一致：`aca0e8a4784f0dd1b77c922652bc0989df3b645206be25f58819bd3d4c77390c` |
 | `python examples/b_qr_carrier_check.py` | 总体 `passed`，退出码 0 |
+| `python examples/b_a_carrier_check.py` | A 艺术融合真图联调 **2/2 通过**（`overall=passed`）：嵌入前后扫码均为 `https://example.com/hello`、秘密 UTF-8 原文一致、CAT1 区域外改动 0 像素 |
 | `python -m py_compile ...`（五个文件） | 通过 |
 | 内存请求流直接调用 `app.Handler` 的 8 项请求处理核查 | 8/8 通过（generate/extract/detect/400/404）；**不等于 HTTP 全链路** |
 | 真实 HTTP 连接 `127.0.0.1:8000` | 端口可绑定，但 TCP 连接 `TimeoutError: timed out`，沙箱网络限制仍在，未通过 |
@@ -78,13 +85,15 @@ python -m py_compile core/steganography.py tests/test_steganography.py tests/tes
 - 二维码区域 `(0,0,296,296)` 与猫咪条带左右各 20px 保留区**逐字节未变**；
 - PNG 写盘重开后 `extract` 返回 `passed`，秘密 UTF-8 原文完全一致。
 
-注意：这是**组长 MVP 的二维码与猫咪条带并置载体**，不是 A 待交付的艺术融合图；扫码为 pyzbar 程序解码，不是手机扫码。两者都不能替代 A 的正式扫码验收。
+注意：这是**组长 MVP 的二维码与猫咪条带并置载体**；扫码为 pyzbar 程序解码，不是手机扫码，不能替代 A 的正式扫码验收。
+
+A 真图联调（本轮新增，原始记录 `examples/b_a_carrier_results.json`）：输入为 A 的 PR #1 中 `outputs/qr_test/case_1_H_level_with_cat.png`，610×410 RGB，SHA-256 `0fb1dc04d1ce3760c832ff93c19b68002634d6897ddc381308bfcf8b218cccca`，公开文本 `https://example.com/hello`，CAT1 区域 `(430,32,160,200)`。空密钥与带密钥两种模式下，嵌入前后 pyzbar 解码文本一致、PNG 重开后 `extract` 均 `passed` 且秘密原文一致、CAT1 区域外像素改动数均为 0。**该区域原本 32000 像素全为纯白**（A 的 `protected_mask` 使猫图不覆盖），写 LSB 后统计特征明显，C 的检测模块容易命中；这是 CAT1 固定区域的固有代价，不是嵌入错误。素材本身未收录进仓库，JSON 以输入 SHA-256 追溯；A 合入后应以 `generate()` 现场输出复测。
 
 ## 5. 上轮文档中「下一位专家动作」的完成情况
 
 1. 建立 `feature/B-lsb` 分支并移植六个 B 文件 —— **已完成**（另加两份新文件；`main` 干净）。
 2. 装齐固定依赖后重跑 B 单测、全套 Python 回归与示例脚本并记录真实输出 —— **已完成**，见第 4 节。
-3. 由 A/组长交付真实可扫码载体并分别实测扫码与恢复 —— **部分完成**：已用现有 MVP 二维码载体完成程序解码 + 秘密恢复双链路；A 的艺术融合 PNG 与手机扫码记录仍待 A/组长提供后复测。
+3. 由 A/组长交付真实可扫码载体并分别实测扫码与恢复 —— **基本完成**：MVP 二维码载体已完成程序解码 + 秘密恢复双链路；本轮另从 A 的 PR #1 取其 610×410 艺术融合真图完成联调（2/2 通过，CAT1 区域外 0 像素改动）。仍待：手机扫码记录；A 的 PR 合入 `main` 后用 `core.qr_generator.generate()` 现场输出再复测一次。
 4. 组长在 `core/service.py` 增加适配、保持 HTTP 协议 —— **未做，且不属 B 分支范围**（分工规定 B 不修改服务层）。
 5. G 改置乱或自适应规则须独立格式标识 —— **未做**，属 G 与组长联调事项。
 
@@ -96,4 +105,4 @@ python -m py_compile core/steganography.py tests/test_steganography.py tests/tes
 - 仅 PNG 等无损路径可用；JPEG、缩放、旋转、裁剪、量化会破坏位置或最低位。
 - 本轮**未完成真实 HTTP 全链路与浏览器验收**：`127.0.0.1:8000` 可绑定但 TCP 连接超时，沙箱网络限制与上轮 MVP 验收记录一致；`web/node_modules` 未安装，前端 `npm test` / `npm run build` 未重跑（B 分支不改动 `web/`）。请求处理 8/8 通过不能写成网页验收通过。
 - 密钥值不写入图片、日志、CSV、JSON 结果或仓库；结果文件只记录 `key_mode`。
-- `outputs/`、`.deps/`、`__pycache__/` 均被 Git 忽略，不进提交。
+- `outputs/`、`.deps/`、`__pycache__/` 均被 Git 忽略，不进提交；需要交付的原始结果已用 `--output` 生成快照放在 `examples/`，组内 clone 后可直接查看。
