@@ -67,6 +67,10 @@ python -m py_compile core/steganography.py tests/test_steganography.py tests/tes
 | `python examples/b_lsb_demo.py --output outputs/b_lsb_cat1_regen.png` | `status=passed`、`payload_bytes=10`、`capacity_bytes=11960`；重新生成的 PNG 与交付样例 SHA-256 完全一致：`aca0e8a4784f0dd1b77c922652bc0989df3b645206be25f58819bd3d4c77390c` |
 | `python examples/b_qr_carrier_check.py` | 总体 `passed`，退出码 0 |
 | `python -m py_compile ...`（五个文件） | 通过 |
+| 内存请求流直接调用 `app.Handler` 的 8 项请求处理核查 | 8/8 通过（generate/extract/detect/400/404）；**不等于 HTTP 全链路** |
+| 真实 HTTP 连接 `127.0.0.1:8000` | 端口可绑定，但 TCP 连接 `TimeoutError: timed out`，沙箱网络限制仍在，未通过 |
+
+请求处理核查是本机临时脚本（`outputs/b_http_inprocess_check.py`）与结果（`outputs/b_http_inprocess_results.json`），均被 Git 忽略、**不属于 B 的仓库交付**；它实例化组长的真实 Handler，用内存流替代 socket，验证本分支没有破坏现有服务层的请求处理，但不验证 TCP、Vite 代理或浏览器。
 
 双链路实测细节（原始记录 `outputs/b_qr_carrier_results.json`）：载体为 `core.baseline.generate()` 输出的 496×296 PNG，公开文本 `https://example.com/cat1`，秘密 28 字节，CAT1 区域 `(316, 32, 160, 200)`。空密钥与有密钥两种模式下：
 
@@ -90,6 +94,6 @@ python -m py_compile core/steganography.py tests/test_steganography.py tests/tes
 - 置乱不等于加密；空密钥的 HMAC 没有密钥认证意义。
 - `extract` 只捕获 `OSError` 类图像读取失败；PNG 连文件头都无法解析时，`Image.open` 在调用模块前抛异常，需由服务层捕获。超大图的 `DecompressionBombError` 亦由服务层的像素上限约束。
 - 仅 PNG 等无损路径可用；JPEG、缩放、旋转、裁剪、量化会破坏位置或最低位。
-- 本轮未做浏览器 HTTP 全链路验收，也未验证 `web/dist` 构建；模块测试不等于网页验收。
+- 本轮**未完成真实 HTTP 全链路与浏览器验收**：`127.0.0.1:8000` 可绑定但 TCP 连接超时，沙箱网络限制与上轮 MVP 验收记录一致；`web/node_modules` 未安装，前端 `npm test` / `npm run build` 未重跑（B 分支不改动 `web/`）。请求处理 8/8 通过不能写成网页验收通过。
 - 密钥值不写入图片、日志、CSV、JSON 结果或仓库；结果文件只记录 `key_mode`。
 - `outputs/`、`.deps/`、`__pycache__/` 均被 Git 忽略，不进提交。
