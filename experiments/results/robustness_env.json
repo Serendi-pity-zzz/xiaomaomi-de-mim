@@ -1,0 +1,29 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "pillow": "12.3.0",
+  "numpy": "2.3.5",
+  "qr_backend": "opencv",
+  "impl": "core.service",
+  "seed": 20261107,
+  "attacks": [
+    "jpeg",
+    "gaussian",
+    "salt",
+    "occlude",
+    "occlude_region",
+    "crop",
+    "rotate"
+  ],
+  "strengths": [
+    0,
+    20,
+    40,
+    60,
+    80,
+    100
+  ],
+  "repeats": 1,
+  "records": 126,
+  "生成时间": "2026-11-15 21:40:39"
+}
