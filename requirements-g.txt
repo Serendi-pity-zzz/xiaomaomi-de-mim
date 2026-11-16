@@ -1,0 +1,3 @@
+# Additional G module dependencies; existing requirements.txt is unchanged.
+Pillow>=12,<14
+numpy==2.2.6

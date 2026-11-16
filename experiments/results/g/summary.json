@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-16",
+  "sources": 30,
+  "calibration_sources": 10,
+  "evaluation_sources": 20,
+  "conditions": 450,
+  "secret_passed": 450,
+  "qr_passed": 450,
+  "qr_unavailable": 0,
+  "protected_checks": 450,
+  "position_checks": 90,
+  "timing_rows": 510,
+  "attack_rows": 315,
+  "attack_sources": [
+    "cat02",
+    "cat03",
+    "cat05"
+  ],
+  "python": "3.10.8",
+  "numpy": "2.2.6",
+  "pillow": "12.0.0",
+  "dataset_sha256": "ef52ffb2ea0be65e7b5b60fc106abb86940b99ac11b1925ac3b98d4de43595f8",
+  "team_manifest_sha256": "b01db59176f45b293e06cc52a74c2866f53c3f3a7a0c8b2d2d3f46cd4bbe1e46",
+  "common_capacity": 11956,
+  "payload_policy": "same seeded ASCII bytes per source/ratio for all methods",
+  "carrier": "A-G-private-1; explicit local integration proposal, not unmodified A",
+  "detection": "Official C bias-adjusted chi-square; entire 160x200 region; score is not a probability",
+  "integrity": "Message authentication only; B-sequential empty key has no secret-key authenticity",
+  "timing_policy": "one warmup per method; 3 repeats first six sources at 50%, one otherwise; excludes PNG/QR/C/metrics"
+}

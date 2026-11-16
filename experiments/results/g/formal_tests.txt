@@ -1,0 +1,34 @@
+test_all_five_algorithms_png_recovery_and_protection (test_g_alignment.TeamAlignmentTests) ... ok
+test_all_g_methods_sync_capacity_and_tampering (test_g_alignment.TeamAlignmentTests) ... ok
+test_bundle_missing_metadata_is_not_passed (test_g_alignment.TeamAlignmentTests) ... ok
+test_c_uses_released_calibration (test_g_alignment.TeamAlignmentTests) ... ok
+test_f_zero_strength_is_identity_and_crop_is_failure (test_g_alignment.TeamAlignmentTests) ... ok
+test_formal_b_matches_cat1_baseline (test_g_alignment.TeamAlignmentTests) ... ok
+test_original_a_conflict_and_private_adapter (test_g_alignment.TeamAlignmentTests) ... ok
+test_protocols_are_not_silently_mixed (test_g_alignment.TeamAlignmentTests) ... ok
+test_snapshots_exact (test_g_alignment.TeamAlignmentTests) ... ok
+test_wrong_key_and_mask (test_g_alignment.TeamAlignmentTests) ... ok
+test_capacity_rejection_does_not_modify_input (test_g_core.KeyedLSBTests) ... ok
+test_corrupted_length_is_bounded (test_g_core.KeyedLSBTests) ... ok
+test_existing_cat_carrier_and_cat1_unchanged (test_g_core.KeyedLSBTests) ... ok
+test_invalid_inputs (test_g_core.KeyedLSBTests) ... ok
+test_messages_and_exact_capacity_after_png (test_g_core.KeyedLSBTests) ... ok
+test_payload_tampering (test_g_core.KeyedLSBTests) ... ok
+test_position_sync_uniqueness_and_key_difference (test_g_core.KeyedLSBTests) ... ok
+test_source_and_outside_region_unchanged (test_g_core.KeyedLSBTests) ... ok
+test_wrong_key_and_unmarked_image (test_g_core.KeyedLSBTests) ... ok
+test_inconclusive_is_separate_from_errors (test_g_research.ResearchDesignTests) ... ok
+test_real_sources_and_authors_do_not_leak (test_g_research.ResearchDesignTests) ... ok
+test_bad_masks_and_corrupted_png (test_g_transport.TransportTests) ... ok
+test_bundle_rejects_changed_mask_and_metadata_dimensions (test_g_transport.TransportTests) ... ok
+test_demo_roundtrip (test_g_transport.TransportTests) ... ok
+test_fresh_process_extracts_only_png_and_key (test_g_transport.TransportTests) ... ok
+test_high_bit_features_and_flat_edges (test_g_transport.TransportTests) ... ok
+test_metric_identity (test_g_transport.TransportTests) ... ok
+test_errors (test_roundtrip.Flow) ... ok
+test_roundtrip (test_roundtrip.Flow) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 18.936s
+
+OK

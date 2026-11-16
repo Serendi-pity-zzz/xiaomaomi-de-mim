@@ -1,0 +1,450 @@
+{
+  "official_threshold": 0.5,
+  "local_shared_threshold": 0.391946818876326,
+  "fit_policy": "One shared threshold, maximize calibration balanced accuracy; ties favor low FPR then higher threshold. Never fit evaluation labels.",
+  "training": {
+    "tp": 95,
+    "tn": 9,
+    "fp": 1,
+    "fn": 55,
+    "inconclusive_clean": 0,
+    "inconclusive_stego": 0,
+    "total": 160,
+    "decidable": 160,
+    "tpr": 0.6333333333333333,
+    "fpr": 0.1,
+    "balanced_accuracy": 0.7666666666666666
+  },
+  "evaluation": {
+    "B-sequential": {
+      "0.1": {
+        "official": {
+          "tp": 14,
+          "tn": 9,
+          "fp": 11,
+          "fn": 6,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.7,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.575
+        },
+        "local_shared": {
+          "tp": 14,
+          "tn": 8,
+          "fp": 12,
+          "fn": 6,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.7,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.55
+        }
+      },
+      "0.5": {
+        "official": {
+          "tp": 14,
+          "tn": 9,
+          "fp": 11,
+          "fn": 6,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.7,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.575
+        },
+        "local_shared": {
+          "tp": 14,
+          "tn": 8,
+          "fp": 12,
+          "fn": 6,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.7,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.55
+        }
+      },
+      "0.8": {
+        "official": {
+          "tp": 18,
+          "tn": 9,
+          "fp": 11,
+          "fn": 2,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.9,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.675
+        },
+        "local_shared": {
+          "tp": 18,
+          "tn": 8,
+          "fp": 12,
+          "fn": 2,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.9,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.65
+        }
+      }
+    },
+    "B-keyed": {
+      "0.1": {
+        "official": {
+          "tp": 12,
+          "tn": 9,
+          "fp": 11,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.525
+        },
+        "local_shared": {
+          "tp": 12,
+          "tn": 8,
+          "fp": 12,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.5
+        }
+      },
+      "0.5": {
+        "official": {
+          "tp": 17,
+          "tn": 9,
+          "fp": 11,
+          "fn": 3,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.85,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.65
+        },
+        "local_shared": {
+          "tp": 17,
+          "tn": 8,
+          "fp": 12,
+          "fn": 3,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.85,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.625
+        }
+      },
+      "0.8": {
+        "official": {
+          "tp": 20,
+          "tn": 9,
+          "fp": 11,
+          "fn": 0,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 1.0,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.725
+        },
+        "local_shared": {
+          "tp": 20,
+          "tn": 8,
+          "fp": 12,
+          "fn": 0,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 1.0,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.7
+        }
+      }
+    },
+    "G-keyed": {
+      "0.1": {
+        "official": {
+          "tp": 12,
+          "tn": 9,
+          "fp": 11,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.525
+        },
+        "local_shared": {
+          "tp": 12,
+          "tn": 8,
+          "fp": 12,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.5
+        }
+      },
+      "0.5": {
+        "official": {
+          "tp": 17,
+          "tn": 9,
+          "fp": 11,
+          "fn": 3,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.85,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.65
+        },
+        "local_shared": {
+          "tp": 17,
+          "tn": 8,
+          "fp": 12,
+          "fn": 3,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.85,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.625
+        }
+      },
+      "0.8": {
+        "official": {
+          "tp": 20,
+          "tn": 9,
+          "fp": 11,
+          "fn": 0,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 1.0,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.725
+        },
+        "local_shared": {
+          "tp": 20,
+          "tn": 8,
+          "fp": 12,
+          "fn": 0,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 1.0,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.7
+        }
+      }
+    },
+    "G-sobel": {
+      "0.1": {
+        "official": {
+          "tp": 11,
+          "tn": 9,
+          "fp": 11,
+          "fn": 9,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.55,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.5
+        },
+        "local_shared": {
+          "tp": 12,
+          "tn": 8,
+          "fp": 12,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.5
+        }
+      },
+      "0.5": {
+        "official": {
+          "tp": 12,
+          "tn": 9,
+          "fp": 11,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.525
+        },
+        "local_shared": {
+          "tp": 12,
+          "tn": 8,
+          "fp": 12,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.5
+        }
+      },
+      "0.8": {
+        "official": {
+          "tp": 15,
+          "tn": 9,
+          "fp": 11,
+          "fn": 5,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.75,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.6
+        },
+        "local_shared": {
+          "tp": 15,
+          "tn": 8,
+          "fp": 12,
+          "fn": 5,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.75,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.575
+        }
+      }
+    },
+    "G-variance": {
+      "0.1": {
+        "official": {
+          "tp": 12,
+          "tn": 9,
+          "fp": 11,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.525
+        },
+        "local_shared": {
+          "tp": 12,
+          "tn": 8,
+          "fp": 12,
+          "fn": 8,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.6,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.5
+        }
+      },
+      "0.5": {
+        "official": {
+          "tp": 10,
+          "tn": 9,
+          "fp": 11,
+          "fn": 10,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.5,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.475
+        },
+        "local_shared": {
+          "tp": 11,
+          "tn": 8,
+          "fp": 12,
+          "fn": 9,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.55,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.47500000000000003
+        }
+      },
+      "0.8": {
+        "official": {
+          "tp": 15,
+          "tn": 9,
+          "fp": 11,
+          "fn": 5,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.75,
+          "fpr": 0.55,
+          "balanced_accuracy": 0.6
+        },
+        "local_shared": {
+          "tp": 15,
+          "tn": 8,
+          "fp": 12,
+          "fn": 5,
+          "inconclusive_clean": 0,
+          "inconclusive_stego": 0,
+          "total": 40,
+          "decidable": 40,
+          "tpr": 0.75,
+          "fpr": 0.6,
+          "balanced_accuracy": 0.575
+        }
+      }
+    }
+  }
+}

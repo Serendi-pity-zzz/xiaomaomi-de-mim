@@ -1,0 +1,281 @@
+{
+  "quality": [
+    {
+      "algorithm": "B-sequential",
+      "ratio": 0.1,
+      "sources": 20,
+      "psnr_db": 69.20032989793967,
+      "ssim": 0.9999530748049447,
+      "region_psnr_db": 61.01106388374386,
+      "region_ssim": 0.9997210419308347
+    },
+    {
+      "algorithm": "B-sequential",
+      "ratio": 0.5,
+      "sources": 20,
+      "psnr_db": 62.32926016227672,
+      "ssim": 0.9998121201570973,
+      "region_psnr_db": 54.13999414808093,
+      "region_ssim": 0.9987901142497135
+    },
+    {
+      "algorithm": "B-sequential",
+      "ratio": 0.8,
+      "sources": 20,
+      "psnr_db": 60.30069033113964,
+      "ssim": 0.9997123872807681,
+      "region_psnr_db": 52.11142431694384,
+      "region_ssim": 0.9981241556351167
+    },
+    {
+      "algorithm": "B-keyed",
+      "ratio": 0.1,
+      "sources": 20,
+      "psnr_db": 69.20067975240512,
+      "ssim": 0.9999612709348451,
+      "region_psnr_db": 61.011413738209306,
+      "region_ssim": 0.9997465501100333
+    },
+    {
+      "algorithm": "B-keyed",
+      "ratio": 0.5,
+      "sources": 20,
+      "psnr_db": 62.323855842703054,
+      "ssim": 0.9998123564162086,
+      "region_psnr_db": 54.13458982850725,
+      "region_ssim": 0.9987727156156323
+    },
+    {
+      "algorithm": "B-keyed",
+      "ratio": 0.8,
+      "sources": 20,
+      "psnr_db": 60.299703225653595,
+      "ssim": 0.9997020347227643,
+      "region_psnr_db": 52.11043721145779,
+      "region_ssim": 0.9980507344417802
+    },
+    {
+      "algorithm": "G-keyed",
+      "ratio": 0.1,
+      "sources": 20,
+      "psnr_db": 69.20174117057466,
+      "ssim": 0.9999612523587217,
+      "region_psnr_db": 61.012475156378876,
+      "region_ssim": 0.9997468604089892
+    },
+    {
+      "algorithm": "G-keyed",
+      "ratio": 0.5,
+      "sources": 20,
+      "psnr_db": 62.32200850254695,
+      "ssim": 0.9998126904262555,
+      "region_psnr_db": 54.132742488351155,
+      "region_ssim": 0.998774562490923
+    },
+    {
+      "algorithm": "G-keyed",
+      "ratio": 0.8,
+      "sources": 20,
+      "psnr_db": 60.28105786649144,
+      "ssim": 0.9997004853664755,
+      "region_psnr_db": 52.091791852295636,
+      "region_ssim": 0.9980401763689253
+    },
+    {
+      "algorithm": "G-sobel",
+      "ratio": 0.1,
+      "sources": 20,
+      "psnr_db": 69.18057571812565,
+      "ssim": 0.99998724820905,
+      "region_psnr_db": 60.99130970392987,
+      "region_ssim": 0.9999178500642438
+    },
+    {
+      "algorithm": "G-sobel",
+      "ratio": 0.5,
+      "sources": 20,
+      "psnr_db": 62.32846388326368,
+      "ssim": 0.9999063328484604,
+      "region_psnr_db": 54.13919786906787,
+      "region_ssim": 0.9993921431647415
+    },
+    {
+      "algorithm": "G-sobel",
+      "ratio": 0.8,
+      "sources": 20,
+      "psnr_db": 60.29478073485443,
+      "ssim": 0.9997605382353996,
+      "region_psnr_db": 52.10551472065862,
+      "region_ssim": 0.9984361916851769
+    },
+    {
+      "algorithm": "G-variance",
+      "ratio": 0.1,
+      "sources": 20,
+      "psnr_db": 69.20390713634715,
+      "ssim": 0.9999881226435632,
+      "region_psnr_db": 61.01464112215135,
+      "region_ssim": 0.9999236055275091
+    },
+    {
+      "algorithm": "G-variance",
+      "ratio": 0.5,
+      "sources": 20,
+      "psnr_db": 62.31951601576619,
+      "ssim": 0.9999131550892842,
+      "region_psnr_db": 54.13025000157039,
+      "region_ssim": 0.9994364567527011
+    },
+    {
+      "algorithm": "G-variance",
+      "ratio": 0.8,
+      "sources": 20,
+      "psnr_db": 60.29738289323884,
+      "ssim": 0.9997697448566157,
+      "region_psnr_db": 52.10811687904302,
+      "region_ssim": 0.9984964547879527
+    }
+  ],
+  "paired": [
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-keyed",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": -0.007251659729778481,
+      "ci_low": -0.017310362535579743,
+      "ci_high": 0.003323438101752173
+    },
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-keyed",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": -1.5551758790127713e-05,
+      "ci_low": -0.00011985121080858294,
+      "ci_high": 8.983557716542084e-05
+    },
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-sobel",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": -0.000796279013050949,
+      "ci_low": -0.016222748158504042,
+      "ci_high": 0.013317866644864285
+    },
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-sobel",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": 0.0006020289150281855,
+      "ci_low": 0.0004607227348335773,
+      "ci_high": 0.0007478260558335194
+    },
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-variance",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": -0.009744146510530882,
+      "ci_low": -0.02354300032497398,
+      "ci_high": 0.004464378231695614
+    },
+    {
+      "reference": "B-sequential",
+      "algorithm": "G-variance",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": 0.0006463425029877568,
+      "ci_low": 0.0005075020417555929,
+      "ci_high": 0.0007907888003263386
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-keyed",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": -0.001847340156103172,
+      "ci_low": -0.01313354767163566,
+      "ci_high": 0.010026929067034175
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-keyed",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": 1.846875291117156e-06,
+      "ci_low": -2.536330176231144e-06,
+      "ci_high": 5.839624569526774e-06
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-sobel",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": 0.00460804056062436,
+      "ci_low": -0.011048937782782193,
+      "ci_high": 0.01858720785828055
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-sobel",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": 0.0006194275491094303,
+      "ci_low": 0.0005199271766044296,
+      "ci_high": 0.0007162318577374856
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-variance",
+      "metric": "region_psnr_db",
+      "n": 20,
+      "mean_delta": -0.004339826936855573,
+      "ci_low": -0.019076416920483626,
+      "ci_high": 0.00942926424238898
+    },
+    {
+      "reference": "B-keyed",
+      "algorithm": "G-variance",
+      "metric": "region_ssim",
+      "n": 20,
+      "mean_delta": 0.0006637411370690016,
+      "ci_low": 0.0005603505473486848,
+      "ci_high": 0.0007623578844595439
+    }
+  ],
+  "timing": [
+    [
+      "B-sequential",
+      11960,
+      "34.1",
+      "26.5"
+    ],
+    [
+      "B-keyed",
+      11960,
+      "59.5",
+      "45.9"
+    ],
+    [
+      "G-keyed",
+      11956,
+      "379.7",
+      "550.1"
+    ],
+    [
+      "G-sobel",
+      11956,
+      "484.2",
+      "621.1"
+    ],
+    [
+      "G-variance",
+      11956,
+      "500.3",
+      "673.0"
+    ]
+  ]
+}
