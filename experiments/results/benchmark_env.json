@@ -1,0 +1,45 @@
+{
+  "python": "3.13.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "Pillow": "11.3.0",
+  "numpy": "2.1.3",
+  "matplotlib": "3.10.6",
+  "impl": "core.service",
+  "carrier_source": "cats",
+  "dataset": "FELIX Experimental Study Set (CC licensed)",
+  "samples": 12,
+  "repeats": 3,
+  "payloads": [
+    16,
+    128,
+    512,
+    2048,
+    8192
+  ],
+  "algorithms": [
+    "sequential",
+    "keyed"
+  ],
+  "seed": 20261109,
+  "target_size": [
+    800,
+    600
+  ],
+  "cases": 360,
+  "records": 360,
+  "ssim_config": {
+    "version": "wang2004-global-v1",
+    "structure": "Wang et al. 2004 global SSIM",
+    "channel": "RGB -> gray (ITU-R 601-2: 0.299R+0.587G+0.114B)",
+    "window": "11x11 gaussian",
+    "sigma": 1.5,
+    "border": "reflect",
+    "data_range": 255.0,
+    "C1": 6.502500000000001,
+    "C2": 58.522499999999994,
+    "aggregate": "arithmetic mean of SSIM map",
+    "implementation": "numpy (no scikit-image)"
+  },
+  "timing_scope": "algorithm call only (no HTTP / IO)",
+  "生成时间": "2026-11-16 18:26:56"
+}
