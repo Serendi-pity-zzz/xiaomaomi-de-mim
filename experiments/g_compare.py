@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：运行五种 B/G 算法、三档载荷和 F 攻击的可复现实验，记录逐条件结果。
+# 关联文件：g_team_adapter.py 调用成员模块，g_metrics.py 计算质量，data/g_cats/g_manifest.json 指定数据。
+# 后续处理：g_summarize.py 汇总输出；--smoke 使用两张来源图，完整运行写入 outputs/g_compare/。
+# === 原代码 ===
 """Official B/C/F snapshots + explicit private A adapter; all output is local."""
 import csv
 import hashlib
@@ -9,7 +14,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 from experiments import g_team_adapter as team
-from core import adaptive_steganography as g
+from core import g_adaptive_steganography as g
 from experiments.g_metrics import evaluate
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,7 +55,7 @@ def main():
         OUT = ROOT / 'outputs' / 'g_smoke'
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT/'samples').mkdir(exist_ok=True)
-    manifest = json.loads((DATA/'manifest.json').read_text(encoding='utf-8'))
+    manifest = json.loads((DATA/'g_manifest.json').read_text(encoding='utf-8'))
     if args.smoke:
         manifest = manifest[:2]
     assert len({r['source_group'] for r in manifest}) == len(manifest)
@@ -126,8 +131,8 @@ def main():
                 detections.append({**base,'algorithm':algorithm,'ratio':ratio,'label':1,
                                    'score':analysis['score'],'decision':analysis['decision']})
                 if sample==attack_ids[0] and ratio==0.5:
-                    (OUT/'samples'/f'{sample}_{algorithm}.png').write_bytes(stream.getvalue())
-                    original.save(OUT/'samples'/f'{sample}_cover.png')
+                    (OUT/'samples'/f"g_{sample}_{algorithm.removeprefix('G-')}.png").write_bytes(stream.getvalue())
+                    original.save(OUT/'samples'/f'g_{sample}_cover.png')
                 if sample in attack_ids and ratio==0.5:
                     for name in team.F.ATTACKS:
                         for strength in (0,20,60):
@@ -145,7 +150,7 @@ def main():
                                             'integrity_status':decoded['status'],'detection_score':'',
                                             'error':decoded['detail'] if decoded['status']!='passed' else ''})
             print(f'{sample} {ratio:.0%}: B/C/F + G verified',flush=True)
-        for name,data in [('comparison.csv',rows),('detection_samples.csv',detections),('robustness.csv',attacks),('timings.csv',timings)]:
+        for name,data in [('g_comparison.csv',rows),('g_detection_samples.csv',detections),('g_robustness.csv',attacks),('g_timings.csv',timings)]:
             write_csv(name,data)
 
     train = [r for r in detections if r['split']=='calibration']
@@ -170,14 +175,14 @@ def main():
                'position_checks':sum(r['positions_equal'] is True for r in rows),
                'timing_rows':len(timings),'attack_rows':len(attacks),'attack_sources':attack_ids,
                'python':platform.python_version(),'numpy':np.__version__,'pillow':Image.__version__,
-               'dataset_sha256':hashlib.sha256((DATA/'manifest.json').read_bytes()).hexdigest(),
-               'team_manifest_sha256':hashlib.sha256((team.VENDOR/'manifest.json').read_bytes()).hexdigest(),
+               'dataset_sha256':hashlib.sha256((DATA/'g_manifest.json').read_bytes()).hexdigest(),
+               'team_manifest_sha256':hashlib.sha256((team.VENDOR/'g_manifest.json').read_bytes()).hexdigest(),
                'common_capacity':common_capacity,'payload_policy':'same seeded ASCII bytes per source/ratio for all methods',
                'carrier':'A-G-private-1; explicit local integration proposal, not unmodified A',
                'detection':'Official C bias-adjusted chi-square; entire 160x200 region; score is not a probability',
                'integrity':'Message authentication only; B-sequential empty key has no secret-key authenticity',
                'timing_policy':'one warmup per method; 3 repeats first six sources at 50%, one otherwise; excludes PNG/QR/C/metrics'}
-    for name,data in [('summary.json',summary),('detection_results.json',detection)]:
+    for name,data in [('g_summary.json',summary),('g_detection_results.json',detection)]:
         (OUT/name).write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(summary,ensure_ascii=False,indent=2),flush=True)
 

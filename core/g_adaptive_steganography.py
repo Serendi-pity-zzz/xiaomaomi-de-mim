@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：实现任务 G 的密钥位置排序、Sobel/局部方差自适应 LSB，以及容量检查、嵌入和提取。
+# 关联文件：core/g_png.py 负责 PNG 参数保存；experiments/g_team_adapter.py 调用本模块参加对比实验。
+# 相关测试：tests/g_test_core.py、tests/g_test_alignment.py；位置规则和 GEX1 协议说明见 docs/g_交接说明.md。
+# === 原代码 ===
 """Private GEX1: RGB, protected masks, sequential/keyed/adaptive single-bit LSB.
 
 No CAT1 compatibility or automatic format dispatch is claimed.

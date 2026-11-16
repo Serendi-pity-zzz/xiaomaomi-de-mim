@@ -1,6 +1,6 @@
 # G 实验猫图数据
 
-30 张 160×200 RGB PNG，共约 1.73 MB。图片来自 Wikimedia Commons，作者、来源、许可和修改说明见 ATTRIBUTION.md、manifest.json；衍生含密图继续遵守各自原图许可。
+30 张 160×200 RGB PNG，共约 1.73 MB。图片来自 Wikimedia Commons，作者、来源、许可和修改说明见 g_ATTRIBUTION.md、g_manifest.json；衍生含密图继续遵守各自原图许可。
 
 manifest 的 sha256 对应当时下载的来源图片字节，来源原图未重复放入正式交付。
 rgb_sha256 对应本目录 PNG 解码后的 RGB 字节，G 比较脚本和核验脚本检查该字段。

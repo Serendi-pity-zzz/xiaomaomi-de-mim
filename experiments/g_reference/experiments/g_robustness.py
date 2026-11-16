@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 来源：组员 F 的冻结代码副本；本文件仅增加中文文件说明，原始正文保留。
+# 用途：为 G 实验提供 JPEG、噪声、遮挡、裁剪、旋转攻击和实际二维码解码。
+# 关联文件：experiments/g_team_adapter.py 加载本文件；experiments/g_compare.py 复用 apply_attack/decode_qr。
+# === 原代码 ===
 """F：二维码鲁棒性与抗干扰测试。
 
 对应分工：F——实现 JPEG、噪声、遮挡、裁剪、旋转等干扰，分别统计

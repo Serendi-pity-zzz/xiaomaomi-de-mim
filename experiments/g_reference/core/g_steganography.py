@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 来源：组员 B 的冻结代码副本；本文件仅增加中文文件说明，原始正文保留。
+# 用途：提供 CAT1 顺序/密钥置乱 LSB 的正式对照算法及消息提取。
+# 关联文件：experiments/g_team_adapter.py 调用本文件；tests/g_test_alignment.py 检查与原基线一致。
+# === 原代码 ===
 """CAT1-compatible RGB LSB embedding and extraction.
 
 The carrier region and packet layout are deliberately fixed. Changing either

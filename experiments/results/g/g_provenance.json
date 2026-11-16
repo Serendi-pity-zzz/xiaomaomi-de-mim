@@ -1,0 +1,46 @@
+{
+  "experiment_date": "2026-11-16",
+  "origin": "Previously measured G team-aligned experiment, migrated byte-for-byte; not a new full benchmark run.",
+  "algorithm_unchanged": true,
+  "sha256": {
+    "core/g_adaptive_steganography.py": "6935a418358fd9b9abc1adbef0491f0dcdc8c0b96b64e8e434bf5ebb90239a9f",
+    "core/g_png.py": "013738bfe7f86c3ac3be9225676a46f343cf3c8992b9b09a11d808e26cb46275",
+    "experiments/results/g/g_comparison.csv": "9d568198619cc58eb348716b8352c60273a85030137db54ff2681cf10b2ecfc0",
+    "experiments/results/g/g_detection_samples.csv": "748ab8fc19f682fc2856c8317695edbadf5c8e118883f376695a48dba881ad97",
+    "experiments/results/g/g_robustness.csv": "96b35889eae6c65743b0508d6ca1320ee92829bdc2d240a74cf7e1b7b50f7cca",
+    "experiments/results/g/g_timings.csv": "81300a461dfc2895e3dc935fb116a780592c77a19586b397ae6b48efb642a063",
+    "experiments/results/g/g_aggregates.json": "28b0ee9abc145228e0feb3fae56378acf9a01aea87e55e5d8fc057a3ffcef36b",
+    "experiments/results/g/g_detection_results.json": "f45d2c2d3062e45a43cb39b0e044969c4bd1f3c5c478a8fa15ee423dc19a9047",
+    "experiments/results/g/g_summary.json": "1e8019313700b3719c1358b10a756c74878749ab6f29a622f7f280ff00130f80",
+    "experiments/data/g_cats/g_manifest.json": "a3dbead960bc90f5a07196531252c884d07da543f2f965db9d169c49e5b61777",
+    "experiments/g_reference/g_manifest.json": "acb0a75536b8b1a3b18f8e2b07b1712dddfb810b7d90d8262d08b3b23cacafc7"
+  },
+  "original_sha256": {
+    "core/adaptive_steganography.py": "e6df77a69ac88e04fb12db72b75c760eca46d9622364fd9b0bf171f13849e13c",
+    "core/g_png.py": "176f76632c88375bb3b05ea60a591f9fd3aac1f3c63d968e4e29e2d2ea8127f1",
+    "experiments/results/g/comparison.csv": "9d568198619cc58eb348716b8352c60273a85030137db54ff2681cf10b2ecfc0",
+    "experiments/results/g/detection_samples.csv": "748ab8fc19f682fc2856c8317695edbadf5c8e118883f376695a48dba881ad97",
+    "experiments/results/g/robustness.csv": "96b35889eae6c65743b0508d6ca1320ee92829bdc2d240a74cf7e1b7b50f7cca",
+    "experiments/results/g/timings.csv": "81300a461dfc2895e3dc935fb116a780592c77a19586b397ae6b48efb642a063",
+    "experiments/results/g/aggregates.json": "28b0ee9abc145228e0feb3fae56378acf9a01aea87e55e5d8fc057a3ffcef36b",
+    "experiments/results/g/detection_results.json": "f45d2c2d3062e45a43cb39b0e044969c4bd1f3c5c478a8fa15ee423dc19a9047",
+    "experiments/results/g/summary.json": "054136092a8c205e649ce97b2964f4e1c5404184029d955232e7ada2d832d107",
+    "experiments/data/g_cats/manifest.json": "ef52ffb2ea0be65e7b5b60fc106abb86940b99ac11b1925ac3b98d4de43595f8",
+    "experiments/g_reference/manifest.json": "b01db59176f45b293e06cc52a74c2866f53c3f3a7a0c8b2d2d3f46cd4bbe1e46"
+  },
+  "rename_note": "Added g_ file prefixes; adjusted imports and manifest image filenames. Original digests retained in original_sha256; raw measurement bytes are unchanged.",
+  "before_chinese_headers_sha256": {
+    "core/g_adaptive_steganography.py": "e6df77a69ac88e04fb12db72b75c760eca46d9622364fd9b0bf171f13849e13c",
+    "core/g_png.py": "2f671005e30ea7cdbea0a4d543aa891ada286d1c5aafa238cf3d77540f289a6b",
+    "experiments/results/g/g_comparison.csv": "9d568198619cc58eb348716b8352c60273a85030137db54ff2681cf10b2ecfc0",
+    "experiments/results/g/g_detection_samples.csv": "748ab8fc19f682fc2856c8317695edbadf5c8e118883f376695a48dba881ad97",
+    "experiments/results/g/g_robustness.csv": "96b35889eae6c65743b0508d6ca1320ee92829bdc2d240a74cf7e1b7b50f7cca",
+    "experiments/results/g/g_timings.csv": "81300a461dfc2895e3dc935fb116a780592c77a19586b397ae6b48efb642a063",
+    "experiments/results/g/g_aggregates.json": "28b0ee9abc145228e0feb3fae56378acf9a01aea87e55e5d8fc057a3ffcef36b",
+    "experiments/results/g/g_detection_results.json": "f45d2c2d3062e45a43cb39b0e044969c4bd1f3c5c478a8fa15ee423dc19a9047",
+    "experiments/results/g/g_summary.json": "ebaa70766f3acdb79f853581ab163c549229eaa4631e0f14448832250b598ce2",
+    "experiments/data/g_cats/g_manifest.json": "a3dbead960bc90f5a07196531252c884d07da543f2f965db9d169c49e5b61777",
+    "experiments/g_reference/g_manifest.json": "c3729086cdbc5e01a173fb97873297992030035d7adfeb96918c0fed7739c006"
+  },
+  "file_description_note": "Removed repeated task markers from filenames; added Chinese header comments to all 19 G Python files. Original teammate source body hashes remain in the reference manifest; annotated hashes validate the complete files."
+}

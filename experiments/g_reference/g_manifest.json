@@ -1,0 +1,65 @@
+[
+  {
+    "branch": "feature/A-qr",
+    "commit": "d0cfb69456181b577b7238dcd4579e135f8ea7bc",
+    "path": "core/qr_generator.py",
+    "sha256": "946c375f55cb2ca20e2157f587f3829237eb92e3acc1b58c029112a4aef6385e",
+    "local_path": "core/g_qr_generator.py",
+    "annotation_bytes": 399,
+    "annotated_sha256": "92cf2957f48316d99e3bf8d4c0596768ed88b8bdd5cef6988458084c27d3a74f"
+  },
+  {
+    "branch": "feature/B-lsb",
+    "commit": "f0d9604725bf473bb5628199dc24ccc75bbd3b86",
+    "path": "core/steganography.py",
+    "sha256": "d1f80725964555c158c29df0c90cb5dcf9792221c007f0dd9d53f65e5c9f238b",
+    "local_path": "core/g_steganography.py",
+    "annotation_bytes": 354,
+    "annotated_sha256": "d95cd5109bb3af3514defaf83cf782e5d89925212b36c3e0d81c34a1e35d2ac8"
+  },
+  {
+    "branch": "feature/C-steganalysis",
+    "commit": "3b4f7413d7c106596e513935104fc35dfaa7a75a",
+    "path": "core/steganalysis.py",
+    "sha256": "ff5107785c5b2cf19959a0bbdce564232729875499ac60f2fb6aa7b5ac331644",
+    "local_path": "core/g_steganalysis.py",
+    "annotation_bytes": 371,
+    "annotated_sha256": "db0a29c3f4af9e5000babd904bf3e1c67e2fbf1cea250eab5cd80389ca033af4"
+  },
+  {
+    "branch": "feature/C-steganalysis",
+    "commit": "3b4f7413d7c106596e513935104fc35dfaa7a75a",
+    "path": "core/steganalysis_calibration.json",
+    "sha256": "7fe50ac892c63c5db4567e4d1f5d1e6ecab91661e1f9c721f3ff4c691ef707e0",
+    "local_path": "core/g_steganalysis_calibration.json",
+    "annotation_bytes": 0,
+    "annotated_sha256": "7fe50ac892c63c5db4567e4d1f5d1e6ecab91661e1f9c721f3ff4c691ef707e0"
+  },
+  {
+    "branch": "main",
+    "commit": "4e33b4ef4cbdf8ac340ced60d932b14fceb718c1",
+    "path": "experiments/robustness.py",
+    "sha256": "7b4eb6d171f1d1ed79af5feef0d47d75f2e3d2d1a8898f0c9b74a88733575a9c",
+    "local_path": "experiments/g_robustness.py",
+    "annotation_bytes": 375,
+    "annotated_sha256": "f1aad1954e883f9083abb6a3365558e6b7cb9e5b1522c7b3b7c994439ecfc9e7"
+  },
+  {
+    "branch": "main",
+    "commit": "4e33b4ef4cbdf8ac340ced60d932b14fceb718c1",
+    "path": "core/baseline.py",
+    "sha256": "aa165007a0d45a9d57a5b69adb9259dc38af4f2abf90b41a03227d1d90b1d6b8",
+    "local_path": "core/g_baseline.py",
+    "annotation_bytes": 378,
+    "annotated_sha256": "b765d6fc1eb15cd6eefc9c6283a3c0c7408d8658239f224c5b7f149bc7f312a0"
+  },
+  {
+    "branch": "main",
+    "commit": "4e33b4ef4cbdf8ac340ced60d932b14fceb718c1",
+    "path": "core/service.py",
+    "sha256": "3d047768fc72e58bc9060fd09a002b110ab17f005e53090014879718e2f4233a",
+    "local_path": "core/g_service.py",
+    "annotation_bytes": 389,
+    "annotated_sha256": "3fa7949b4f5bdca0310fd31ac0a84a26e472c3f77ecbf1e3fb144bd772579a55"
+  }
+]

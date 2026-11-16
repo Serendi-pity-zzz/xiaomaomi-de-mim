@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 来源：原项目 CAT1 基线的冻结代码副本；本文件仅增加中文文件说明，原始正文保留。
+# 用途：保留原二维码载体、CAT1 嵌入/提取规则，供 B 兼容性测试核对。
+# 关联文件：experiments/g_team_adapter.py 的 load 函数加载本文件；tests/g_test_alignment.py 执行对照。
+# === 原代码 ===
 """组长集成基线；成员模块通过 service.py 接入。"""
 import hashlib
 import hmac

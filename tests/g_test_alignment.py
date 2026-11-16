@@ -1,10 +1,15 @@
+# === 文件说明 ===
+# 用途：验证 A/B/C/F 与 G 的对接、成员副本校验、五方法 PNG 往返、掩码保护和攻击边界。
+# 关联文件：experiments/g_team_adapter.py、experiments/g_reference/g_manifest.json、core/g_png.py。
+# 运行入口：tests/g_run_tests.py；同时检查原始成员正文与文件头中文说明各自的校验值。
+# === 原代码 ===
 import hashlib
 import io
 import json
 import unittest
 import numpy as np
 from PIL import Image
-from core import adaptive_steganography as g
+from core import g_adaptive_steganography as g
 from experiments import g_team_adapter as team
 from core.g_png import save_png, load_png, extract_png
 
@@ -17,8 +22,10 @@ class TeamAlignmentTests(unittest.TestCase):
         cls.carrier = team.generate('https://example.com', cls.cat)
 
     def test_snapshots_exact(self):
-        for item in json.loads((team.VENDOR / 'manifest.json').read_text()):
-            self.assertEqual(hashlib.sha256((team.VENDOR / item['path']).read_bytes()).hexdigest(), item['sha256'])
+        for item in json.loads((team.VENDOR / 'g_manifest.json').read_text()):
+            raw = (team.VENDOR / item['local_path']).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), item['annotated_sha256'])
+            self.assertEqual(hashlib.sha256(raw[item['annotation_bytes']:]).hexdigest(), item['sha256'])
 
     def test_original_a_conflict_and_private_adapter(self):
         original = team.generate('https://example.com', self.cat, mode='a-original')

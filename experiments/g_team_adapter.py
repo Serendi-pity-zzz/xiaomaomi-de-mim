@@ -1,16 +1,24 @@
+# === 文件说明 ===
+# 用途：为 G 实验适配 A 的载体与保护掩码，统一调用 B/G 嵌入提取、C 检测和 F 攻击/扫码。
+# 关联文件：g_reference/g_manifest.json 指定成员副本；core/g_adaptive_steganography.py 和 core/g_png.py 提供 G 算法。
+# 调用方：experiments/g_compare.py、examples/g_demo.py、tests/g_test_alignment.py；不修改公共服务入口。
+# === 原代码 ===
 """G experiment adapter. Frozen teammate sources remain byte-for-byte intact."""
 import importlib.util
+import json
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from core import adaptive_steganography as g
+from core import g_adaptive_steganography as g
 from core.g_png import save_png, extract_png
 
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / 'experiments' / 'g_reference'
 
 def load(name, path):
-    spec = importlib.util.spec_from_file_location(name, VENDOR / path)
+    records = json.loads((VENDOR / 'g_manifest.json').read_text(encoding='utf-8'))
+    record = next(item for item in records if item['path'] == path)
+    spec = importlib.util.spec_from_file_location(name, VENDOR / record['local_path'])
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -82,7 +90,7 @@ def restore(path, key, algorithm):
 
 def detect(image, region):
     # Use C's unchanged released threshold and calibration, no fit on test data.
-    return C.analyze(image, region)
+    return C.analyze(image, region, calibration_path=VENDOR / 'core/g_steganalysis_calibration.json')
 
 def scan(image, public):
     result = F.decode_qr(image)

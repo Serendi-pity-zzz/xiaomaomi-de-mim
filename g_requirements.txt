@@ -1,0 +1,5 @@
+# 用途：G 核心运行依赖；对应 core/g_adaptive_steganography.py 和 core/g_png.py。
+# 关联说明：docs/g_交接说明.md。
+# Additional G module dependencies; existing requirements.txt is unchanged.
+Pillow>=12,<14
+numpy==2.2.6

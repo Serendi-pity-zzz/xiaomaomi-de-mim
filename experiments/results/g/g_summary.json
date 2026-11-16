@@ -19,12 +19,15 @@
   "python": "3.10.8",
   "numpy": "2.2.6",
   "pillow": "12.0.0",
-  "dataset_sha256": "ef52ffb2ea0be65e7b5b60fc106abb86940b99ac11b1925ac3b98d4de43595f8",
-  "team_manifest_sha256": "b01db59176f45b293e06cc52a74c2866f53c3f3a7a0c8b2d2d3f46cd4bbe1e46",
+  "dataset_sha256": "a3dbead960bc90f5a07196531252c884d07da543f2f965db9d169c49e5b61777",
+  "team_manifest_sha256": "acb0a75536b8b1a3b18f8e2b07b1712dddfb810b7d90d8262d08b3b23cacafc7",
   "common_capacity": 11956,
   "payload_policy": "same seeded ASCII bytes per source/ratio for all methods",
   "carrier": "A-G-private-1; explicit local integration proposal, not unmodified A",
   "detection": "Official C bias-adjusted chi-square; entire 160x200 region; score is not a probability",
   "integrity": "Message authentication only; B-sequential empty key has no secret-key authenticity",
-  "timing_policy": "one warmup per method; 3 repeats first six sources at 50%, one otherwise; excludes PNG/QR/C/metrics"
+  "timing_policy": "one warmup per method; 3 repeats first six sources at 50%, one otherwise; excludes PNG/QR/C/metrics",
+  "original_dataset_sha256": "ef52ffb2ea0be65e7b5b60fc106abb86940b99ac11b1925ac3b98d4de43595f8",
+  "original_team_manifest_sha256": "b01db59176f45b293e06cc52a74c2866f53c3f3a7a0c8b2d2d3f46cd4bbe1e46",
+  "filename_note": "Filenames retain only the leading g_ task marker. G Python files have Chinese purpose/relationship comments; teammate source bodies and measurements are unchanged."
 }

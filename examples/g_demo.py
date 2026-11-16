@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：一键演示猫图载体上的 G 隐写、PNG 保存、提取、二维码解码和统计检测。
+# 关联文件：调用 experiments/g_team_adapter.py，使用 experiments/data/g_cats/g_cat02.png。
+# 输出位置：outputs/g_demo/；复用 core/g_png.py 的文件格式，测试入口见 tests/g_test_transport.py。
+# === 原代码 ===
 """G module demonstration, independent of the private work directory.
 
 Run from repository root: python -m examples.g_demo
@@ -15,13 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 def run(output_dir, method='sobel'):
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    with Image.open(ROOT/'experiments/data/g_cats/cat02.png') as cat:
+    with Image.open(ROOT/'experiments/data/g_cats/g_cat02.png') as cat:
         carrier = team.generate('https://example.com', cat)
     key = hashlib.sha256(b'public-g-aligned-demo').hexdigest()
     message = '任务G：密钥置乱 + Sobel 自适应，PNG 无损恢复 🐱'
     algorithm = 'G-' + method
     output = team.embed(carrier, message, key, algorithm)
-    png = output_dir/'stego.png'
+    png = output_dir/'g_stego.png'
     team.save(png, output, carrier['protected_mask'], algorithm)
     restored = team.restore(png, key, algorithm)
     success = restored['status']=='passed' and restored['secret']==message
@@ -32,7 +37,7 @@ def run(output_dir, method='sobel'):
               'scan_success':team.scan(output['image'], carrier['public']),
               'detection_decision':team.detect(output['image'],carrier['region'])['decision'],
               'fixture_only':True}
-    (output_dir/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+    (output_dir/'g_verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     return report
 
 def main():

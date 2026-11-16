@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：验证 PNG 参数校验、独立进程提取、一键演示、稳定高位特征、损坏输入及指标边界。
+# 关联文件：core/g_png.py、core/g_adaptive_steganography.py、examples/g_demo.py、experiments/g_metrics.py。
+# 运行入口：tests/g_run_tests.py；临时文件用于隔离每次测试的输入输出。
+# === 原代码 ===
 """Independent-process transport and CLI checks for the current G delivery."""
 import contextlib
 import io
@@ -9,7 +14,7 @@ from pathlib import Path
 from unittest.mock import patch
 import numpy as np
 from PIL import Image
-from core import adaptive_steganography as g
+from core import g_adaptive_steganography as g
 from core.g_png import save_png, load_png
 from experiments.g_metrics import evaluate
 
@@ -30,7 +35,7 @@ class TransportTests(unittest.TestCase):
     def test_fresh_process_extracts_only_png_and_key(self):
         im = self.fixture()
         with tempfile.TemporaryDirectory() as folder:
-            path = Path(folder)/'bundle.png'
+            path = Path(folder)/'g_bundle.png'
             save_png(path,g.embed(im,'新进程🐱',KEY,(0,0,24,24),method='sobel'))
             script = 'from core.g_png import extract_png; import sys; r=extract_png(sys.argv[1],sys.argv[2]); assert r["status"]=="passed"; assert r["secret"]=="新进程🐱"'
             run = subprocess.run([sys.executable,'-B','-c',script,str(path),KEY],cwd=ROOT,capture_output=True)

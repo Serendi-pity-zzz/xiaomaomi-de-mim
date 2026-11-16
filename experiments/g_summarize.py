@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：读取逐条件 CSV，生成质量均值、运行时间中位数、配对 bootstrap 区间和比较图。
+# 关联文件：输入由 experiments/g_compare.py 生成；现有证据保存在 experiments/results/g/。
+# 输出位置：默认 outputs/g_analysis/；结果表和图表的解释见 docs/g_交接说明.md。
+# === 原代码 ===
 """Reproduce G aggregates and chart from measured CSV files."""
 import csv
 import json
@@ -35,11 +40,11 @@ def main():
     if ANALYSIS == OUT or ANALYSIS == (ROOT/'experiments/results/g').resolve():
         raise ValueError('Choose a separate output directory to preserve raw evidence')
     ANALYSIS.mkdir(parents=True, exist_ok=True)
-    summary = json.loads((OUT/'summary.json').read_text(encoding='utf-8'))
-    detection = json.loads((OUT/'detection_results.json').read_text(encoding='utf-8'))
-    rows = [r for r in read('comparison.csv') if r['split']=='evaluation']
-    timing = [r for r in read('timings.csv') if r['split']=='evaluation' and float(r['ratio'])==0.5]
-    attacks = read('robustness.csv')
+    summary = json.loads((OUT/'g_summary.json').read_text(encoding='utf-8'))
+    detection = json.loads((OUT/'g_detection_results.json').read_text(encoding='utf-8'))
+    rows = [r for r in read('g_comparison.csv') if r['split']=='evaluation']
+    timing = [r for r in read('g_timings.csv') if r['split']=='evaluation' and float(r['ratio'])==0.5]
+    attacks = read('g_robustness.csv')
     aggregate, quality_table, time_table, detect_table, pairs = [], [], [], [], []
     for method in METHODS:
         for ratio in (0.1,0.5,0.8):
@@ -80,7 +85,7 @@ def main():
             attack_table.append([attack,strength,len(group),f"{sum(r['scan_success']=='True' for r in group)}/{len(group)}",
                                  f"{sum(r['secret_success']=='True' for r in group)}/{len(group)}",
                                  sum(r['integrity_status']=='passed' for r in group),sum(r['integrity_status']=='failed' for r in group),sum(r['integrity_status']=='unknown' for r in group)])
-    (ANALYSIS/'aggregates.json').write_text(json.dumps({'quality':aggregate,'paired':pairs,'timing':time_table},indent=2),encoding='utf-8')
+    (ANALYSIS/'g_aggregates.json').write_text(json.dumps({'quality':aggregate,'paired':pairs,'timing':time_table},indent=2),encoding='utf-8')
     fig, axes = plt.subplots(1,2,figsize=(11,4),layout='constrained')
     for method in METHODS:
         group = [r for r in aggregate if r['algorithm']==method]
@@ -90,7 +95,7 @@ def main():
             ax.set_ylabel(label)
             ax.grid(alpha=.2)
     axes[0].legend(fontsize=8)
-    fig.savefig(ANALYSIS/'quality_comparison.png',dpi=180)
+    fig.savefig(ANALYSIS/'g_quality_comparison.png',dpi=180)
     plt.close(fig)
     print('Reproduced aggregates and chart:', ANALYSIS)
 

@@ -1,8 +1,13 @@
+# === 文件说明 ===
+# 用途：验证 G 核心的消息恢复、容量边界、位置同步、错误密钥、篡改和 CAT1 格式隔离。
+# 关联文件：core/g_adaptive_steganography.py 为被测模块；core/baseline.py 提供原项目基线对照。
+# 运行入口：tests/g_run_tests.py；使用公开测试密钥和小图，不依赖私人代码目录。
+# === 原代码 ===
 import io
 import unittest
 from PIL import Image
 from core import baseline
-from core import adaptive_steganography as g
+from core import g_adaptive_steganography as g
 
 KEY = 'public-test-key'
 

@@ -36,4 +36,4 @@
 | cat30 | Dewi Rahmawaati | [File:My cat is white.jpg](https://commons.wikimedia.org/wiki/File:My_cat_is_white.jpg) | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) | evaluation |
 
 修改：Commons 640px 缩略图，EXIF 方向校正，转 RGB，LANCZOS 缩放为 160×200；后续合成二维码并按实验条件修改 RGB 最低位。
-完整元数据、原图地址、下载地址和 SHA256 见 manifest.json。下载及像素哈希均去重，每个作者只选一张。
+完整元数据、原图地址、下载地址和 SHA256 见 g_manifest.json。下载及像素哈希均去重，每个作者只选一张。

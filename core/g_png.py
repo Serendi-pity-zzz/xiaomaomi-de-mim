@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：保存带有区域、保护掩码和版本参数的 GEX1 PNG；只凭 PNG 文件和密钥恢复秘密。
+# 关联文件：调用 core/g_adaptive_steganography.py；被 experiments/g_team_adapter.py 和 examples/g_demo.py 使用。
+# 相关测试：tests/g_test_transport.py；保留 PNG 文本元数据是正常提取的必要条件。
+# === 原代码 ===
 """PNG carries region and full mask; extraction never needs the original image."""
 import base64
 import hashlib
@@ -5,7 +10,7 @@ import json
 import zlib
 import numpy as np
 from PIL import Image, PngImagePlugin
-from .adaptive_steganography import mask_array, extract
+from .g_adaptive_steganography import mask_array, extract
 
 FIELD = 'ruoai_gex1'
 

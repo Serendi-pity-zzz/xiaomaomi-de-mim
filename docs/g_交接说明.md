@@ -1,8 +1,8 @@
-# G_交接说明
+# g_交接说明
 
 交付日期：2026-11-16。负责人：任务 G（ruoai）。
 
-本次只新增文件：G 的算法、PNG 封装、测试、实验复现材料及报告。没有修改现有服务、前端、其他组员文件或原 requirements.txt，也没有提交或 push。G 已完成模块级验证；现有 HTTP 服务仍运行旧 CAT1 基线，不能把本次交付等同于网站已接入 G。
+本次只新增文件：G 的算法、PNG 封装、测试、实验复现材料及报告。没有修改现有服务、前端、其他组员文件或原 requirements.txt，也本次重命名未提交或 push。G 已完成模块级验证；现有 HTTP 服务仍运行旧 CAT1 基线，不能把本次交付等同于网站已接入 G。
 
 ## 1. 交付概览与主要结论
 
@@ -14,15 +14,18 @@
 
 本文统一说明交付接口、算法原理、实验设计、结果和接入事项。原始 CSV、图表、固定成员提交和照片许可均随新增文件交付，不依赖私人目录。
 
+文件名只在开头保留小写 `g_` 前缀，文件名中间或结尾的独立 g/G 任务标识已去除；单词本身的字母不改。所有 G 代码文件开头均有中文用途说明和关联文件列表。照片的 sample_id 和算法标识保持不变，仅文件名及引用路径调整。实验引用副本仅新增文件头中文说明，原始正文保持不变，`g_manifest.json` 用 `path` 保留原仓库路径，用 `local_path` 记录当前带前缀的文件名。
+
 ## 2. 文件清单与归属
 
 | 新文件/目录 | 作用 | 是否用于正式运行 |
 | --- | --- | --- |
-| core/adaptive_steganography.py | G 位置、特征、容量、嵌入和提取 | 是，G 主模块 |
+| core/g_adaptive_steganography.py | G 位置、特征、容量、嵌入和提取 | 是，G 主模块 |
 | core/g_png.py | PNG 自描述参数、保存和提取 | 是，G 文件传输模块 |
-| requirements-g.txt | G 额外依赖；不修改公共依赖文件 | 安装时使用 |
+| g_requirements.txt | G 额外依赖；不修改公共依赖文件 | 安装时使用 |
 | examples/g_demo.py | 真实猫图一键演示 | 验收示例 |
-| tests/test_g_*.py | 核心、格式、传输、团队对齐、研究设计测试 | 回归测试 |
+| tests/g_run_tests.py | 同时运行 G 改名后的测试与原有项目回归 | 回归入口 |
+| tests/g_test_*.py | 核心、格式、传输、团队对齐、研究设计测试 | 回归测试 |
 | experiments/g_summarize.py | 从 CSV 重建统计表和图表 | 实验工具 |
 | experiments/g_compare.py | 五方法/三载荷及 F 攻击复现 | 实验工具 |
 | experiments/g_team_adapter.py | A 掩码适配、B/C/F 调用与明确分流 | 实验用接入示例 |
@@ -31,24 +34,24 @@
 | experiments/data/g_cats/ | 30 张标准化 RGB PNG、来源及许可 | 实验数据 |
 | experiments/results/g/ | 原始记录、图表、样例及来源核验 | 实测证据 |
 | experiments/g_verify.py | 检查证据哈希及计数 | 快速核验 |
-| experiments/requirements-g-research.txt | 已使用的研究依赖版本 | 完整实验环境 |
+| experiments/g_requirements-research.txt | 已使用的研究依赖版本 | 完整实验环境 |
 
-A/B/C 尚未合并到当前 main。为保证组长在此分支也能复现，实验引用固定快照，且校验原文件哈希。它们不会覆盖公共模块，也不是 G 本人开发的成果。正式集成应采用组长确认的各成员模块版本。
+A/B/C 尚未合并到当前 main。为保证组长在此分支也能复现，实验引用固定快照，同时校验原始代码正文与带注释文件的哈希。它们不会覆盖公共模块，也不是 G 本人开发的成果。正式集成应采用组长确认的各成员模块版本。
 
 ## 3. 安装、运行与复现
 
-推荐在独立虚拟环境安装，避免改动正在使用的项目环境。只使用核心 G 时可在已有项目环境安装 `requirements-g.txt`；若运行完整测试和实验，使用研究版本集合：
+推荐在独立虚拟环境安装，避免改动正在使用的项目环境。只使用核心 G 时可在已有项目环境安装 `g_requirements.txt`；若运行完整测试和实验，使用研究版本集合：
 
 ```powershell
-python -m pip install -r experiments/requirements-g-research.txt
-python -B -m unittest discover -s tests -v
+python -m pip install -r experiments/g_requirements-research.txt
+python -B tests/g_run_tests.py
 python -B -m examples.g_demo
 python -B -m experiments.g_verify
 ```
 
 这里的研究环境是 Python 3.10.8 / Pillow 12.0.0 / numpy 2.2.6 等；现有项目 requirements.txt 指定 Pillow 13.0.0，本次未改它。核心依赖声明允许 Pillow 12–13，但本轮验证实际运行在 12.0.0，不把版本范围声明当作每个版本均已实测。
 
-演示输出 `outputs/g_demo/stego.png` 和 verification.json，使用公开固定测试密钥，非真实秘密。该 PNG 使用 GEX1；当前网页提取入口仍只处理 CAT1，因此请先用模块接口验证。
+演示输出 `outputs/g_demo/g_stego.png` 和 g_verification.json，使用公开固定测试密钥，非真实秘密。该 PNG 使用 GEX1；当前网页提取入口仍只处理 CAT1，因此请先用模块接口验证。
 
 ```powershell
 # 两个来源的迁移烟雾测试；不替代完整实验
@@ -58,20 +61,20 @@ python -B -m experiments.g_compare
 python -B -m experiments.g_summarize
 ```
 
-烟雾测试输出 outputs/g_smoke；完整实验耗时更长。重跑后的计时可能因机器负载改变。提交的 450 条原始记录是之前完整运行的原样迁移，不声称本次文件迁移重新跑了全部 450 条。核心算法与 PNG 封装按原字节迁移，provenance.json 可验证。
+烟雾测试输出 outputs/g_smoke；完整实验耗时更长。重跑后的计时可能因机器负载改变。提交的 450 条原始记录是之前完整运行的原样迁移，不声称本次文件迁移重新跑了全部 450 条。核心算法仅新增中文文件头注释，PNG 封装另调整模块导入名称，g_provenance.json 可验证。
 
 ## 4. 核心接口及最小调用
 
 ```python
-from core.adaptive_steganography import embed, extract, capacity_bytes
+from core.g_adaptive_steganography import embed, extract, capacity_bytes
 from core.g_png import save_png, extract_png
 
 # image 为 RGB，region=(x,y,width,height)，mask=True 表示禁止改动。
 # image、region、mask 由组长认可的 A 载体适配层提供。
 result = embed(image, secret, key, region,
                protected_mask=mask, method='sobel')
-save_png('stego.png', result, mask)
-restored = extract_png('stego.png', key)
+save_png('g_stego.png', result, mask)
+restored = extract_png('g_stego.png', key)
 # restored: {'status': 'passed'/'failed'/'unknown', 'secret': str|None, 'detail': ...}
 ```
 
@@ -168,15 +171,15 @@ flowchart TD
 | C | 正式 bias-adjusted chi-square、原校准 0.5；另做独立集共同阈值分析 | 固定 region/校准版本；score 不是含密概率 |
 | D | 使用 G 消息 HMAC；没有另造正式 D 模块 | passed 不代表整图不变，也不能定位篡改 |
 | E | 本地 PSNR 与 RGB 7×7 SSIM，记录全图和隐藏区 | 以后 E 交付需核对窗口、动态范围、计时定义 |
-| F | 原样 apply_attack/decode_qr；由 G 批处理传入对应算法上下文 | 容量用实际值；扫码/恢复/消息认证分别统计 |
+| F | 复用原版 apply_attack/decode_qr；由 G 批处理传入对应算法上下文 | 容量用实际值；扫码/恢复/消息认证分别统计 |
 
 ## 7. 实验来源、设计与验证口径
 
-本报告的 450 条对比、315 条攻击和 510 条计时来自先前已完成的完整实测，本次按原始字节迁移到 experiments/results/g，不声称迁移过程重新运行了完整实验。G 核心和 PNG 封装与实测版本字节相同；来源、文件哈希和原始结果由 provenance.json 记录。正式目录另外执行回归和两来源烟雾测试，验证迁移未改变结果，见 formal_validation.json。
+本报告的 450 条对比、315 条攻击和 510 条计时来自先前已完成的完整实测，本次按原始字节迁移到 experiments/results/g，不声称迁移过程重新运行了完整实验。G 核心算法与实测版本一致，核心和 PNG 封装新增中文文件头，PNG 封装另调整模块导入名称；来源、文件哈希和原始结果由 g_provenance.json 记录。正式目录另外执行回归和两来源烟雾测试，验证迁移未改变结果，见 g_formal_validation.json。
 
-A/B/C/F 快照属于各成员的贡献。快照提交、路径和哈希见 experiments/g_reference/manifest.json，内容未修改。B 的顺序和密钥置乱两种配置直接用正式 B 实现；C 使用正式偏差修正卡方检测器；F 复用正式攻击和扫码算子。E/D 尚无此分支的新正式实现，质量指标由本地实验辅助模块计算，消息认证不冒充整图认证。
+A/B/C/F 快照属于各成员的贡献。快照提交、路径和哈希见 experiments/g_reference/g_manifest.json，原始代码正文未修改，副本仅新增中文文件头注释。B 的顺序和密钥置乱两种配置直接用正式 B 实现；C 使用正式偏差修正卡方检测器；F 复用正式攻击和扫码算子。E/D 尚无此分支的新正式实现，质量指标由本地实验辅助模块计算，消息认证不冒充整图认证。
 
-使用已留存的 30 张 Commons 猫照片，每个来源/作者只选一张；10 张校准、20 张评估，来源和作者不交叉，脚本检查每张 RGB 哈希。照片不是随机抽样的大规模自然图像基准，衍生的许多含密图不能当成许多独立来源。完整许可和加工说明在数据目录的 ATTRIBUTION.md、manifest.json；使用原图及衍生图仍需保留各自作者和许可。
+使用已留存的 30 张 Commons 猫照片，每个来源/作者只选一张；10 张校准、20 张评估，来源和作者不交叉，脚本检查每张 RGB 哈希。照片不是随机抽样的大规模自然图像基准，衍生的许多含密图不能当成许多独立来源。完整许可和加工说明在数据目录的 g_ATTRIBUTION.md、g_manifest.json；使用原图及衍生图仍需保留各自作者和许可。
 
 固定 A 的 H 纠错、公开文本、隐藏区 160×200。五方法同一载体、同一消息字节数；载荷按共同容量 11956 的 10%、50%、80% 取整，为 1195、5978、9564 字节，而不是各方法分别按自己的容量取不同长度。消息是固定种子的可打印 ASCII，中文/emoji/空消息/满容量由单元测试补充；性能和检测结论不能直接推广到所有文本分布。
 
@@ -211,7 +214,7 @@ MSE 是所有参与计算的 RGB 通道平方差均值；`PSNR=10*log10(255²/MS
 | G-sobel | 20 | 62.328 | 0.999906 | 54.139 | 0.999392 |
 | G-variance | 20 | 62.320 | 0.999913 | 54.130 | 0.999436 |
 
-![三种载荷下的隐藏区域图像质量](../experiments/results/g/quality_comparison.png)
+![三种载荷下的隐藏区域图像质量](../experiments/results/g/g_quality_comparison.png)
 
 容量和当前机器纯算法时间：
 
@@ -267,7 +270,7 @@ C 汇总 RGB 偶数/相邻奇数计数，原统计量 `r=sum((even-odd)^2/(2*(ev
 
 在 50% 载荷和 C 原阈值下，B-keyed 检出 17/20，G-Sobel 检出 12/20；但同一批正常图有 11/20 被误报，误报率 55.0%。共同校准阈值下正常图误报率为 60.0%。因此检测器在真实猫图上的误报问题不能忽略；这些结果仅支持本实验操作点的比较，不能作为安全性证明。
 
-其他 10%/80% 载荷见 detection_results.json。不能挑选最有利的一行宣称全面胜出；低检出率只说明这个检测器在此数据和操作点漏检较多，不证明“无法检测”“绝对隐蔽”或“比其他算法安全”。共同校准阈值只对当前校准数据拟合，不能直接部署作通用阈值。
+其他 10%/80% 载荷见 g_detection_results.json。不能挑选最有利的一行宣称全面胜出；低检出率只说明这个检测器在此数据和操作点漏检较多，不证明“无法检测”“绝对隐蔽”或“比其他算法安全”。共同校准阈值只对当前校准数据拟合，不能直接部署作通用阈值。
 
 ## 10. F 攻击结果与边界
 
@@ -303,31 +306,31 @@ C 汇总 RGB 偶数/相邻奇数计数，原统计量 `r=sum((even-odd)^2/(2*(ev
 
 表中认证通过/失败/未知只描述消息提取状态，不是整图认证。二维码与秘密的成功率分别统计。二维码有自己的编码纠错；像素 LSB 没有相应纠错机制，所以扫码成功并不意味着秘密还在。F 的 crop 实际缩小尺寸，本版本没有几何同步恢复，会返回 unknown；JPEG/噪声会改最低位；旋转会改采样位置。不能说 Sobel 改进了抗压缩性。
 
-攻击后 PSNR/SSIM 在 robustness.csv 中是“攻击前含密图 vs 攻击后图”，含义与主实验的“原始图 vs 含密图”不同；尺寸不一致留空，不伪造为 0。攻击后的 C 分数未测，字段留空。
+攻击后 PSNR/SSIM 在 g_robustness.csv 中是“攻击前含密图 vs 攻击后图”，含义与主实验的“原始图 vs 含密图”不同；尺寸不一致留空，不伪造为 0。攻击后的 C 分数未测，字段留空。
 
 ## 11. 正式目录迁移验证
 
 正式目录执行 29 项测试（含原有 CAT1 的 2 项）全部通过；两来源烟雾验证为 30 个对比条件、105 条攻击。除运行耗时外，对比字段与历史完整实验对应行完全相同，攻击记录全部字段一致。已有 78 个受 Git 跟踪文件的 SHA256 核对无变化。
 
 迁移后的正式目录测试、烟雾测试与历史记录一致性检查见
-[formal_validation.json](../experiments/results/g/formal_validation.json)；测试日志见
-[formal_tests.txt](../experiments/results/g/formal_tests.txt)。这些记录与原研究阶段 27 项测试分开保存。
+[g_formal_validation.json](../experiments/results/g/g_formal_validation.json)；测试日志见
+[g_formal_tests.txt](../experiments/results/g/g_formal_tests.txt)。这些记录与原研究阶段 27 项测试分开保存。
 
 ## 12. 原始数据与审阅索引
 
 | 文件 | 内容 |
 | --- | --- |
-| experiments/results/g/comparison.csv | 450 条五方法/三载荷记录，含扫码、恢复、图像质量、检测与保护 |
-| experiments/results/g/detection_samples.csv | 30 张正常图 + 450 张含密图的 C 分数 |
-| experiments/results/g/detection_results.json | 官方阈值/共同校准阈值的分载荷混淆矩阵 |
-| experiments/results/g/timings.csv | 510 条纯算法计时记录 |
-| experiments/results/g/robustness.csv | 315 条 F 攻击记录 |
-| experiments/results/g/aggregates.json | 评估均值、配对差值与 bootstrap 区间 |
-| experiments/results/g/summary.json | 样本数、环境、来源哈希、实验口径 |
-| experiments/results/g/provenance.json | 迁移来源说明及实测核心/证据文件哈希 |
-| experiments/results/g/formal_validation.json | 新增正式文件的迁移验证；与历史完整实测区分 |
-| experiments/data/g_cats/ATTRIBUTION.md | 照片作者、许可及来源 |
-| experiments/g_reference/manifest.json | A/B/C/F 冻结提交与哈希 |
+| experiments/results/g/g_comparison.csv | 450 条五方法/三载荷记录，含扫码、恢复、图像质量、检测与保护 |
+| experiments/results/g/g_detection_samples.csv | 30 张正常图 + 450 张含密图的 C 分数 |
+| experiments/results/g/g_detection_results.json | 官方阈值/共同校准阈值的分载荷混淆矩阵 |
+| experiments/results/g/g_timings.csv | 510 条纯算法计时记录 |
+| experiments/results/g/g_robustness.csv | 315 条 F 攻击记录 |
+| experiments/results/g/g_aggregates.json | 评估均值、配对差值与 bootstrap 区间 |
+| experiments/results/g/g_summary.json | 样本数、环境、来源哈希、实验口径 |
+| experiments/results/g/g_provenance.json | 迁移来源说明及实测核心/证据文件哈希 |
+| experiments/results/g/g_formal_validation.json | 新增正式文件的迁移验证；与历史完整实测区分 |
+| experiments/data/g_cats/g_ATTRIBUTION.md | 照片作者、许可及来源 |
+| experiments/g_reference/g_manifest.json | A/B/C/F 冻结提交与哈希 |
 
 结论仅覆盖当前数据、载体、位置协议和参数。下一步公共服务接入须保留 CAT1 路径，明确 G 的 PNG 参数传输，并由组长确认 A 的掩码契约。本次仅新增正式交付文件。
 
@@ -339,6 +342,6 @@ C 汇总 RGB 偶数/相邻奇数计数，原统计量 `r=sum((even-odd)^2/(2*(ev
 
 **核心等式：** I'=(I & 254)|b，因此 I' & 254=I & 254。
 
-**结果：** 30 来源、450 条件全部无损恢复与扫码；50% 载荷时 Sobel 相对 B-keyed 区域 SSIM +0.000619，95% 区间 [+0.000520,+0.000716]。图使用 experiments/results/g/quality_comparison.png，注明评估来源数 20。
+**结果：** 30 来源、450 条件全部无损恢复与扫码；50% 载荷时 Sobel 相对 B-keyed 区域 SSIM +0.000619，95% 区间 [+0.000520,+0.000716]。图使用 experiments/results/g/g_quality_comparison.png，注明评估来源数 20。
 
 **结论与限制：** 本样本中局部结构指标改善；PSNR 没有明确改善，运行更慢，容量少 4 字节；不能抗 JPEG/几何变换，不能据低检出率证明安全。

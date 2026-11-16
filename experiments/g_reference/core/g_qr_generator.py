@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 来源：组员 A 的冻结代码副本；本文件仅增加中文文件说明，原始正文保留。
+# 用途：生成二维码、猫图画布、隐藏区域和原版保护掩码，作为 G 对比实验的载体来源。
+# 关联文件：由 experiments/g_team_adapter.py 加载；提交号、正文哈希和当前文件哈希见 ../g_manifest.json。
+# === 原代码 ===
 import qrcode
 from qrcode.constants import ERROR_CORRECT_L, ERROR_CORRECT_M, ERROR_CORRECT_Q, ERROR_CORRECT_H
 from PIL import Image

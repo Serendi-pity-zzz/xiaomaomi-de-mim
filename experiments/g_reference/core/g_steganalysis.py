@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 来源：组员 C 的冻结代码副本；本文件仅增加中文文件说明，原始正文保留。
+# 用途：计算偏差修正卡方检测分数，并提供可选 RS 辅助特征。
+# 关联文件：同目录 g_steganalysis_calibration.json 保存校准；experiments/g_team_adapter.py 显式传入校准文件路径。
+# === 原代码 ===
 """C：隐写统计检测（LSB 值对卡方分析 + RS 辅助特征）。
 
 模块只依赖 Pillow 与标准库；由组长在 core/service.py 中适配，不直接改前端协议。

@@ -1,3 +1,8 @@
+# === 文件说明 ===
+# 用途：验证猫图校准/评估集合不存在来源和作者交叉，并检查不可判定样本的统计口径。
+# 关联文件：experiments/data/g_cats/g_manifest.json 提供分组；experiments/g_compare.py 提供混淆矩阵函数。
+# 运行入口：tests/g_run_tests.py；本文件检查实验设计，不通过重复图像充当独立样本。
+# === 原代码 ===
 import json
 import unittest
 from pathlib import Path
@@ -6,7 +11,7 @@ from experiments.g_compare import confusion
 class ResearchDesignTests(unittest.TestCase):
     def test_real_sources_and_authors_do_not_leak(self):
         root = Path(__file__).resolve().parents[1]/'experiments/data/g_cats'
-        records = json.loads((root/'manifest.json').read_text(encoding='utf-8'))
+        records = json.loads((root/'g_manifest.json').read_text(encoding='utf-8'))
         train = [r for r in records if r['split']=='calibration']
         test = [r for r in records if r['split']=='evaluation']
         self.assertEqual((len(train),len(test)),(10,20))
