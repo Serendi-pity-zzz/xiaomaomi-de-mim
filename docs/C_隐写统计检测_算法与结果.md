@@ -1,24 +1,32 @@
 # C：隐写统计检测（卡方）算法与实测结果
 
-更新：2026-11-15。负责人：C。范围：`core/steganalysis.py`、检测脚本、校准数据、
+更新：2026-11-17。负责人：C。范围：`core/steganalysis.py`、检测脚本、校准数据、
 单元测试与本文。**未修改** `core/service.py`、`app.py`、前端和 A/B/D/E/F/G 的模块；
 接入由组长完成，接入建议见第 8 节。
 
 ## 0. 交付物与运行
 
+2026-11-17 复核：修复 RS 对不足 4 像素区域的除零错误（各比例返回 null，判定仍为 inconclusive）；
+校准加载拒绝非对象 JSON、算法不匹配和无效阈值；校准分数重叠时停止、不覆盖旧文件，
+窄区间使用中点避免网格舍入越界。公开 `analyze` 签名和原校准阈值均保持兼容。
+重新校准可用 `--output outputs/steganalysis/recalibration.json`，先比对结果再替换正式校准文件。
+
 | 文件 | 作用 |
 |---|---|
 | `core/steganalysis.py` | 卡方主检测、RS 辅助特征、校准文件加载/校验 |
 | `core/steganalysis_calibration.json` | 阈值与校准实测数据（含 `calibration_id` 自校验） |
-| `tests/test_steganalysis.py` | 正常、边界、异常案例单元测试（31 项） |
+| `tests/test_steganalysis.py` | 正常、边界、异常案例单元测试（37 项，36 通过，1 项可选 SciPy 交叉验证跳过） |
 | `tests/calibrate_steganalysis.py` | 重新生成校准文件（仅在载体/环境变化时运行） |
-| `tests/eval_steganalysis.py` | 独立评估集上的混淆矩阵、误报/漏报、区域对比、RS 实测 |
+| `tests/eval_steganalysis.py` | 固定评估集上的混淆矩阵、误报/漏报、区域对比、RS 实测；载体重复限制见第 4 节 |
 | `tests/steganalysis_data.py` | 确定性载体/载荷构造；不提交外部图片 |
-| `docs/C_答辩页_统计检测.pptx` | 第 6 页答辩单页（16:9，统一配色，含讲稿备注） |
+| `docs/C_答辩页_统计检测_复核版.pptx` | 第 6 页答辩单页（16:9，更新测试数和数据来源，保留原版） |
+| `docs/C_results/` | 随 C 交付的原始 CSV、分条件混淆矩阵、汇总及运行环境，不依赖被 Git 忽略的 outputs |
 
 ```powershell
 python tests/calibrate_steganalysis.py     # 重新校准（会改写 core/steganalysis_calibration.json）
 python tests/eval_steganalysis.py          # 实测；结果写入 outputs/steganalysis/
+python tests/eval_steganalysis.py --output-dir docs/C_results  # 更新正式交付数据
+python -m unittest discover -s tests -p test_steganalysis.py -v  # 仅 C 的测试
 python -m unittest discover -s tests -v    # 回归
 ```
 
@@ -103,6 +111,9 @@ score = P(χ²_{k-1} ≥ r_adj)
 实现了 Fridrich 型 RS 分组翻转：组大小 4，掩码 `(0,1,1,0)` 及其相反数，按行优先、
 逐通道分组，`f(G)=Σ|x_{i+1}-x_i|`；比较翻转前后的 regular/singular 组数，输出
 `R/S` 比例与 `d = R - S`。
+
+实现中的负翻转在 0/255 处保持原值，属于边界保护的辅助实现；不按经典 RS 嵌入率模型解释。
+不足 4 像素时没有完整分组，计数为 0，比例为 null，不能将缺失特征解释为零风险。
 
 **RS 不参与判定。** 本项目载体的平坦色块和二维码 0/255 饱和值破坏 RS 的模型假设；
 实测中 `d_m` 随载荷单调下降（见 5.5），可作为辅助证据，但固定阈值会把噪声类载体
@@ -210,13 +221,16 @@ calibration_id sha256:c5f8c169f403ebb7f996d5c326348060e4c2ed6bc01b2fe36ab98ecba1
 
 ## 5. 结果（2026-11-15 实测）
 
-原始逐条记录：`outputs/steganalysis/eval_results.csv`、`rs_results.csv`；
-汇总：`outputs/steganalysis/summary.{json,md}`。`outputs/` 被 Git 忽略，本文保留
-可复核的数字与复现命令。
+2026-11-15 的结果叙述保留于本节；2026-11-17 复测的原始逐条记录、RS 记录及汇总
+保存在 `docs/C_results/`，可随仓库交付。评估脚本默认仍输出到被 Git 忽略的
+`outputs/steganalysis/`；使用 `--output-dir docs/C_results` 更新交付快照。
+汇总分别记录本次评估环境和原阈值的校准环境，避免将两次运行混为一谈。
 
-本节不报告单一“准确率”：检出率强烈依赖载荷大小、消息类型与载体结构，把它们
-混成一个数会掩盖容量敏感性。下表按条件给出 TPR（漏报率 = 1 − TPR）与 FPR，
-并附分子/分母；需要单一数字时，应固定条件后再计算。
+本节不报告跨条件的单一“准确率”：检出率强烈依赖载荷大小、消息类型与载体结构，把它们
+混成一个数会掩盖容量敏感性。下表按条件给出 TPR 与正常样本被标记为可疑的比例，
+并附分子/分母；分条件准确率、误报率、漏报率及混淆矩阵由脚本自动输出到 `docs/C_results/summary.{json,md}`。
+二分类指标只在已判定样本上计算，同时报告判定覆盖率；`inconclusive` 单列，不算阴性或正确。
+表中的 TPR 使用全部含密样本作分母，因此存在未知时 `1−TPR` 是“未检出率”，并非已判定样本的漏报率。
 
 ### 5.1 覆盖样本（误报）
 
@@ -270,7 +284,7 @@ calibration_id sha256:c5f8c169f403ebb7f996d5c326348060e4c2ed6bc01b2fe36ab98ecba1
 这张表直观说明：阈值不是“准确率 100%”的通用检测器，而是只在全容量条件下有效；
 10 KB 及以下全部漏报。中文顺序全容量属于 5.2 表中的已知漏报，不并入矩阵以免
 掩盖失败案例。若强行计算 accuracy，全容量条件为 (36+12)/48 = 100%，≤10 KB
-条件为 (0+12)/72 ≈ 16.7%；由于正负样本比 3:1，accuracy 会被负类主导，
+条件为 (0+12)/72 ≈ 16.7%；两个条件的正负样本比分别为 3:1 和 5:1，accuracy 会受样本配比影响，
 因此报告以 TPR/FPR 为主，不把 accuracy 当作主要指标。
 
 合成载体（keyed ASCII 全容量）：7 类各 2 个，全部检出（14/14）。顺序嵌入时
@@ -413,7 +427,7 @@ def detect(image: Image.Image, region=None):
 | 要求 | 本轮证据 |
 |---|---|
 | 研究 LSB 统计特征 | 值对效应 + 偏置分解（2.1–2.3） |
-| 实现卡方检测 | `core/steganalysis.py`；31 项单测通过 |
+| 实现卡方检测 | `core/steganalysis.py`；C 的 37 项测试中 36 通过、1 项可选验证跳过 |
 | 视适用性补充 RS | RS 特征已实现并实测（5.5），明确不参与判定（2.5） |
 | 正常/含密检测与统计量 | 覆盖 26 个、含密 456 条逐样本记录；输出 `statistic/score/decision` |
 | 准确率、误报率、漏报率 | 5.1–5.3 表，含分子/分母与 Wilson 95% CI |
@@ -440,9 +454,9 @@ pair_count` 等；`rs_results.csv` 记录 RS 分项；`summary.json` 保存全�
 
 ## 11. 第 6 页答辩内容
 
-单页文件：`docs/C_答辩页_统计检测.pptx`（16:9，白底、`#263358` 文字、`#4E477E`
-强调色、`#EDF0FA` 浅蓝底，标题 32pt，微软雅黑），含讲稿备注；已用 LibreOffice
-渲染检查过布局、图表数值与表格。若组长使用自己的模板，可直接复制以下六项：
+单页文件：`docs/C_答辩页_统计检测_复核版.pptx`（16:9，白底、`#263358` 文字、`#4E477E`
+强调色、`#EDF0FA` 浅蓝底，标题 32pt，微软雅黑），含讲稿备注；复核版已用 Artifact Tool
+渲染检查，并通过结构、尺寸和原生图表/表格校验。若组长使用自己的模板，可直接复制以下六项：
 
 - **一句目标：** 不解码秘密，只用 LSB 值对统计判断图像是否呈现 LSB 替换痕迹。
 - **三步原理：**
@@ -450,7 +464,7 @@ pair_count` 等；`rs_results.csv` 记录 RS 分项；`summary.json` 保存全�
   2. 偏置修正：`r = Σ(a−c)²/(2n)`，减去 `2N(b−0.5)²` 得 `r_adj`，避免文本 0/1 偏置造成漏报；
   3. 阈值校准：`score = P(χ²_{k−1} ≥ r_adj)`；覆盖最大 `0.000046`、可检测最小 `0.594` → 阈值 `0.5`。
 - **关键实现：** `core/steganalysis.py`（Pillow + 标准库，无新增依赖）；阈值与样本写入
-  校准 JSON，`sha256` 自校验；C 模块 31 项单测、全仓库 33 项回归通过。
+  校准 JSON，`sha256` 自校验；C 的 37 项测试中 36 通过、1 项可选 SciPy 验证跳过。
 - **真实数据图：** 内置猫载体顺序 ASCII 检出率随载荷变化（横轴 64 B / 1 KB / 4 KB /
   8 KB / 10 KB / 11.96 KB，纵轴 TPR 0%–100%），配混淆表：全容量 36/36 检出、
   0/12 误报；≤ 10 KB 0/60 检出、60 漏报、0/12 误报。

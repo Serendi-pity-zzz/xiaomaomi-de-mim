@@ -117,9 +117,9 @@ def chi_square_sf(statistic: float, degrees_of_freedom: int) -> float:
 
     与 ``scipy.stats.chi2.sf`` 的误差在 1e-12 量级（见单元测试）。
     """
-    if degrees_of_freedom <= 0:
+    if isinstance(degrees_of_freedom, bool) or not isinstance(degrees_of_freedom, int) or degrees_of_freedom <= 0:
         raise ValueError('自由度必须为正整数')
-    if not math.isfinite(statistic):
+    if isinstance(statistic, bool) or not isinstance(statistic, (int, float)) or not math.isfinite(statistic):
         raise ValueError('统计量必须是有限数值')
     if statistic <= 0.0:
         return 1.0
@@ -301,12 +301,12 @@ def rs_features(image, region=None) -> dict:
         groups = positive['groups']
         channels[name] = {
             'groups': groups,
-            'r_m': positive['regular'] / groups,
-            's_m': positive['singular'] / groups,
-            'r_neg': negative['regular'] / groups,
-            's_neg': negative['singular'] / groups,
-            'd_m': (positive['regular'] - positive['singular']) / groups,
-            'd_neg': (negative['regular'] - negative['singular']) / groups,
+            'r_m': positive['regular'] / groups if groups else None,
+            's_m': positive['singular'] / groups if groups else None,
+            'r_neg': negative['regular'] / groups if groups else None,
+            's_neg': negative['singular'] / groups if groups else None,
+            'd_m': (positive['regular'] - positive['singular']) / groups if groups else None,
+            'd_neg': (negative['regular'] - negative['singular']) / groups if groups else None,
         }
         total['regular_m'] += positive['regular']
         total['singular_m'] += positive['singular']
@@ -357,11 +357,16 @@ def load_calibration(path=None) -> dict:
         raise ValueError(f'找不到卡方检测校准文件：{target}') from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f'校准文件不是有效 JSON：{target}') from exc
+    if not isinstance(calibration, dict):
+        raise ValueError('校准文件顶层必须是 JSON 对象')
     if calibration.get('schema') != _CALIBRATION_SCHEMA:
         raise ValueError('校准文件 schema 不受支持')
+    if calibration.get('method') != 'chi_square_bias_adjusted':
+        raise ValueError('校准文件 method 与检测算法不匹配')
     expected = calibration_id(calibration)
     if calibration.get('calibration_id') != expected:
         raise ValueError('校准文件校验失败：calibration_id 不匹配，请重新生成')
+    _threshold_from(calibration)
     return calibration
 
 

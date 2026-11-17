@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import sys
 import unittest
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,6 +67,12 @@ class ChiSquareDistributionTests(unittest.TestCase):
             chi_square_sf(float('nan'), 3)
         with self.assertRaises(ValueError):
             chi_square_sf(float('inf'), 3)
+        for df in (True, 1.5, float('nan'), float('inf'), '3', None):
+            with self.subTest(df=df), self.assertRaises(ValueError):
+                chi_square_sf(1, df)
+        for statistic in (True, '1', None):
+            with self.subTest(statistic=statistic), self.assertRaises(ValueError):
+                chi_square_sf(statistic, 3)
 
     @unittest.skipUnless(scipy_chi2 is not None, '未安装 SciPy，跳过交叉验证')
     def test_matches_scipy(self):
@@ -254,6 +261,26 @@ class RsFeatureTests(unittest.TestCase):
         self.assertGreater(cover_m, 0.9)
         self.assertLess(stego_m, 0.1)
 
+    def test_region_without_complete_group_is_inconclusive(self):
+        for region in ((0, 0, 1, 1), (0, 0, 3, 1)):
+            with self.subTest(region=region):
+                result = analyze(self.cover, region, method='rs')
+                self.assertEqual(result['decision'], 'inconclusive')
+                features = result['details']['rs']
+                self.assertEqual(features['pooled']['groups'], 0)
+                self.assertIsNone(features['pooled']['d_m'])
+                for channel in features['channels'].values():
+                    self.assertEqual(channel['groups'], 0)
+                    self.assertIsNone(channel['r_m'])
+                json.dumps(result, allow_nan=False)
+                combined = analyze(self.cover, region, include_rs=True)
+                self.assertEqual(combined['decision'], 'inconclusive')
+
+    def test_one_complete_group_per_channel(self):
+        result = rs_features(self.cover, (0, 0, 4, 1))
+        self.assertEqual(result['pooled']['groups'], 3)
+        self.assertIsNotNone(result['pooled']['d_m'])
+
 
 class CalibrationTests(unittest.TestCase):
     @classmethod
@@ -289,6 +316,55 @@ class CalibrationTests(unittest.TestCase):
     def test_missing_calibration(self):
         with self.assertRaises(ValueError):
             load_calibration(ROOT / 'outputs' / 'does-not-exist.json')
+
+    def test_malformed_calibration_is_rejected(self):
+        invalid = [[], None, 'not-an-object', 42]
+        for field, values in (('method', ('rs', None)),
+                              ('threshold', (None, True, 0, 1.1, float('nan')))):
+            for value in values:
+                item = dict(self.calibration)
+                item[field] = value
+                item['calibration_id'] = calibration_id(item)
+                invalid.append(item)
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / 'calibration.json'
+            for value in invalid:
+                with self.subTest(value=value):
+                    target.write_text(json.dumps(value), encoding='utf-8')
+                    with self.assertRaises(ValueError):
+                        load_calibration(target)
+
+
+class EvaluationMetricsTests(unittest.TestCase):
+    def test_threshold_calibration_handles_narrow_and_overlapping_scores(self):
+        from calibrate_steganalysis import select_threshold
+        self.assertEqual(select_threshold(0.000046, 0.593774)[0], 0.5)
+        threshold = select_threshold(0.511, 0.512)[0]
+        self.assertGreater(threshold, 0.511)
+        self.assertLessEqual(threshold, 0.512)
+        for lower, upper in ((0.6, 0.4), (0.4, 0.4), (0, float('nan'))):
+            with self.subTest(lower=lower, upper=upper), self.assertRaises(ValueError):
+                select_threshold(lower, upper)
+
+    def test_unknowns_are_not_counted_as_correct_or_negative(self):
+        from eval_steganalysis import confusion_metrics
+        result = confusion_metrics(
+            {'n': 5, 'flagged': 1, 'inconclusive': 2},
+            {'n': 5, 'detected': 2, 'inconclusive': 1})
+        self.assertEqual([result[k] for k in ('tp', 'fn', 'fp', 'tn')], [2, 2, 1, 2])
+        self.assertAlmostEqual(result['accuracy_decided'], 4 / 7)
+        self.assertAlmostEqual(result['fpr_decided'], 1 / 3)
+        self.assertAlmostEqual(result['fnr_decided'], 1 / 2)
+        self.assertAlmostEqual(result['decision_coverage'], 7 / 10)
+
+    def test_all_unknown_metrics_are_unavailable(self):
+        from eval_steganalysis import confusion_metrics
+        result = confusion_metrics(
+            {'n': 2, 'flagged': 0, 'inconclusive': 2},
+            {'n': 3, 'detected': 0, 'inconclusive': 3})
+        for key in ('accuracy_decided', 'fpr_decided', 'fnr_decided'):
+            self.assertIsNone(result[key])
+        self.assertEqual(result['decision_coverage'], 0)
 
 
 if __name__ == '__main__':

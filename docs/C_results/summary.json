@@ -1,0 +1,2260 @@
+{
+  "calibration": {
+    "path": "core/steganalysis_calibration.json",
+    "calibration_id": "sha256:c5f8c169f403ebb7f996d5c326348060e4c2ed6bc01b2fe36ab98ecba13a65e7",
+    "threshold": 0.5,
+    "threshold_rule": "结构化覆盖样本最大分数加 0.05 裕量为下界，可检测含密样本最小分数为上界；区间 [0.05, 0.59] 内取可解释的 0.5，兼顾裕量与检出率。",
+    "threshold_interval": {
+      "lower": 0.050046,
+      "upper": 0.593774
+    }
+  },
+  "evaluated_at": "2026-11-17T18:17:50.189816+08:00",
+  "environment": {
+    "python": "3.12.14",
+    "pillow": "13.0.0",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "calibration_environment": {
+    "python": "3.12.10",
+    "pillow": "12.2.0",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "metric_notes": "混淆矩阵按载体和载荷条件分组，复用同类覆盖样本；未知单列。accuracy/fpr/fnr_decided 仅用已判定样本，结合 decision_coverage 阅读。TPR 为检出数/全部含密样本，含未知；1-TPR 是未检出率。内置猫区域重复，不能视为独立照片。",
+  "covers": {
+    "builtin_cat_qr": {
+      "n": 12,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ]
+    },
+    "synthetic_checker": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 1,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_flat": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_gradient": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_noise": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_plasma": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_radial": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    },
+    "synthetic_stripes": {
+      "n": 2,
+      "flagged": 0,
+      "inconclusive": 0,
+      "fpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ]
+    }
+  },
+  "stego": [
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 36,
+      "detected": 36,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.9035781695514236,
+        1.0
+      ],
+      "confusion": {
+        "tp": 36,
+        "fn": 0,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 0.75,
+      "wilson95": [
+        0.40926987910258916,
+        0.9285223111419724
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 2,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.7777777777777778,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.25,
+        "decision_coverage": 0.9
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_ascii_full",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 8,
+      "detected": 8,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6755843804891231,
+        1.0
+      ],
+      "confusion": {
+        "tp": 8,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 36,
+      "detected": 36,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.9035781695514236,
+        1.0
+      ],
+      "confusion": {
+        "tp": 36,
+        "fn": 0,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 0.875
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "keyed_zh_full",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-keyed",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.2425007574992425
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 12,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5,
+      "wilson95": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "confusion": {
+        "tp": 1,
+        "fn": 1,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.6666666666666666,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.5,
+        "decision_coverage": 0.75
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5,
+      "wilson95": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "confusion": {
+        "tp": 1,
+        "fn": 1,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.6666666666666666,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.5,
+        "decision_coverage": 0.75
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5,
+      "wilson95": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "confusion": {
+        "tp": 1,
+        "fn": 1,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.6666666666666666,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.5,
+        "decision_coverage": 0.75
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5,
+      "wilson95": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "confusion": {
+        "tp": 1,
+        "fn": 1,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.6666666666666666,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.5,
+        "decision_coverage": 0.75
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5,
+      "wilson95": [
+        0.09452865480086614,
+        0.9054713451991339
+      ],
+      "confusion": {
+        "tp": 1,
+        "fn": 1,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.6666666666666666,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.5,
+        "decision_coverage": 0.75
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.34237195288961925,
+        1.0
+      ],
+      "confusion": {
+        "tp": 2,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.34237195288961925,
+        1.0
+      ],
+      "confusion": {
+        "tp": 2,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 64,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 1024,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 4096,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 8192,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 10240,
+      "message_kind": "ascii",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.6576280471103807
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 2,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.5,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 36,
+      "detected": 36,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.9035781695514236,
+        1.0
+      ],
+      "confusion": {
+        "tp": 36,
+        "fn": 0,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 0.875
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_ascii_full",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "ascii",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "builtin_cat_qr",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 36,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.09642183044857634
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 36,
+        "fp": 0,
+        "tn": 12,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_checker",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 1,
+        "inconclusive_cover": 1,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.14285714285714285,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 0.875
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_flat",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_gradient",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_noise",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_plasma",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_radial",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 6,
+      "inconclusive": 0,
+      "tpr": 1.0,
+      "wilson95": [
+        0.6096569663469354,
+        0.9999999999999999
+      ],
+      "confusion": {
+        "tp": 6,
+        "fn": 0,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 1.0,
+        "fpr_decided": 0.0,
+        "fnr_decided": 0.0,
+        "decision_coverage": 1.0
+      }
+    },
+    {
+      "condition": "seq_zh_full",
+      "carrier": "synthetic_stripes",
+      "algorithm": "lsb-sequential",
+      "payload_bytes": 11960,
+      "message_kind": "zh",
+      "n": 6,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0,
+      "wilson95": [
+        0.0,
+        0.3903430336530645
+      ],
+      "confusion": {
+        "tp": 0,
+        "fn": 6,
+        "fp": 0,
+        "tn": 2,
+        "inconclusive_cover": 0,
+        "inconclusive_stego": 0,
+        "accuracy_decided": 0.25,
+        "fpr_decided": 0.0,
+        "fnr_decided": 1.0,
+        "decision_coverage": 1.0
+      }
+    }
+  ],
+  "scope": [
+    {
+      "carrier": "builtin_cat_qr",
+      "analysis_scope": "region",
+      "n": 12,
+      "detected": 12,
+      "inconclusive": 0,
+      "tpr": 1.0
+    },
+    {
+      "carrier": "builtin_cat_qr",
+      "analysis_scope": "whole_image",
+      "n": 12,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_checker",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0
+    },
+    {
+      "carrier": "synthetic_checker",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5
+    },
+    {
+      "carrier": "synthetic_flat",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0
+    },
+    {
+      "carrier": "synthetic_flat",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_gradient",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_gradient",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_noise",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0
+    },
+    {
+      "carrier": "synthetic_noise",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 1,
+      "inconclusive": 0,
+      "tpr": 0.5
+    },
+    {
+      "carrier": "synthetic_plasma",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_plasma",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_radial",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 2,
+      "inconclusive": 0,
+      "tpr": 1.0
+    },
+    {
+      "carrier": "synthetic_radial",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_stripes",
+      "analysis_scope": "region",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    },
+    {
+      "carrier": "synthetic_stripes",
+      "analysis_scope": "whole_image",
+      "n": 2,
+      "detected": 0,
+      "inconclusive": 0,
+      "tpr": 0.0
+    }
+  ],
+  "boundary_control": {
+    "n": 10,
+    "flagged": 10,
+    "flagged_rate": 1.0,
+    "note": "LSB 已随机的对照；统计上与全量 LSB 替换不可区分，不计入覆盖样本误报率。"
+  },
+  "rs_d_m_by_payload": {
+    "0": {
+      "n": 6,
+      "mean": 0.9754999999999999,
+      "min": 0.9755,
+      "max": 0.9755
+    },
+    "4096": {
+      "n": 6,
+      "mean": 0.6386666666666667,
+      "min": 0.6386666666666667,
+      "max": 0.6386666666666667
+    },
+    "8192": {
+      "n": 6,
+      "mean": 0.2956666666666667,
+      "min": 0.2956666666666667,
+      "max": 0.2956666666666667
+    },
+    "10240": {
+      "n": 6,
+      "mean": 0.12704166666666666,
+      "min": 0.12704166666666666,
+      "max": 0.12704166666666666
+    },
+    "11960": {
+      "n": 6,
+      "mean": -0.016208333333333335,
+      "min": -0.016208333333333335,
+      "max": -0.016208333333333335
+    }
+  },
+  "cover_pair_counts": {
+    "n": 26,
+    "min": 3,
+    "max": 128
+  },
+  "limitations": [
+    "score 是卡方统计量的上尾分数，不是“含密概率”或后验概率。",
+    "只能发现值对分布被均衡化的证据；秘密较短、位置置乱或自适应算法可能保持原分布而检测不到。",
+    "区域内值对数量 k 很小时自由度低，灵敏度有限；区域选错或改用整图分析会稀释信号。",
+    "LSB 已经近似随机的载体（噪声图、部分截图、二次保存图）与全量嵌入在统计上不可区分，可能误报。",
+    "需约定并保护分析区域；本模块不推断区域，也不验证区域是否被裁剪或缩放。",
+    "PNG 无损前提；JPEG、缩放、滤镜会改变值对统计，结论不适用。",
+    "密钥只影响嵌入位置，不影响本统计检验；检测不需要密钥。"
+  ],
+  "png_roundtrip": [
+    {
+      "sample_id": "eval-cover-cat-00",
+      "before": 0.8342791907067979,
+      "after": 0.8342791907067979,
+      "same": true
+    },
+    {
+      "sample_id": "eval-cover-cat-01",
+      "before": 0.8342791907067979,
+      "after": 0.8342791907067979,
+      "same": true
+    },
+    {
+      "sample_id": "eval-cover-cat-02",
+      "before": 0.8342791907067979,
+      "after": 0.8342791907067979,
+      "same": true
+    },
+    {
+      "sample_id": "eval-cover-cat-03",
+      "before": 0.8342791907067979,
+      "after": 0.8342791907067979,
+      "same": true
+    }
+  ]
+}

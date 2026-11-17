@@ -7,15 +7,17 @@
 校准集与评估集分离：本脚本只用 CALIBRATION_PUBLICS 与 seed=100/101 的合成载体，
 评估脚本 tests/eval_steganalysis.py 使用另一组公开文本与 seed=300/301。
 
-阈值取“覆盖样本最大分数”与“可检测含密样本最小分数”的中点（最大间隔），
-并四舍五入到 0.05。已知漏报（顺序嵌入的中文文本全容量）不参与阈值计算，
+优先在有裕量的间隔内取 0.5，否则取有效分离区间的中点。
+分数重叠时停止校准，不覆盖旧文件。已知漏报（顺序嵌入的中文文本全容量）不参与阈值计算，
 但会记录在文件中，报告里如实列出。
 """
 from __future__ import annotations
 
+import argparse
 import json
+import math
 import sys
-from datetime import date
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -126,7 +128,25 @@ def collect_stegos(covers: list[dict]) -> list[dict]:
     return stegos
 
 
+def select_threshold(max_cover: float, min_detectable: float) -> tuple[float, str, float, float]:
+    if not (math.isfinite(max_cover) and math.isfinite(min_detectable)
+            and 0 <= max_cover < min_detectable <= 1):
+        raise ValueError('校准失败：覆盖与含密分数没有有效分离区间，保留原校准文件')
+    lower, upper = max_cover + 0.05, min_detectable
+    if lower <= DEFAULT_THRESHOLD <= upper:
+        return DEFAULT_THRESHOLD, '覆盖最大分数加 0.05 裕量后，区间内取 0.5。', lower, upper
+    # 不按 0.05 网格舍入，避免窄区间舍入后落到区间外。
+    threshold = (max_cover + min_detectable) / 2
+    return threshold, '0.5 不在有裕量的区间内，取覆盖上界（开区间）与含密下界的中点。', max_cover, upper
+
+
 def main() -> int:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, default=CALIBRATION_PATH,
+                        help='校准文件输出路径，默认替换正式校准文件')
+    args = parser.parse_args()
     covers = collect_covers()
     stegos = collect_stegos(covers)
     structured_covers = [item for item in covers if not item.get('boundary_control')]
@@ -142,24 +162,12 @@ def main() -> int:
     min_detectable = min(detectable)
     known_misses = [item for item in stegos if item.get('known_miss')]
 
-    lower = max_cover + 0.05
-    upper = min_detectable
-    if lower <= DEFAULT_THRESHOLD <= upper:
-        threshold = DEFAULT_THRESHOLD
-        threshold_rule = (
-            '结构化覆盖样本最大分数加 0.05 裕量为下界，可检测含密样本最小分数为上界；'
-            f'区间 [{lower:.2f}, {upper:.2f}] 内取可解释的 0.5，兼顾裕量与检出率。'
-        )
-    else:
-        threshold = max(0.05, round(((max_cover + min_detectable) / 2.0) * 20) / 20.0)
-        threshold_rule = (
-            '0.5 不在校准间隔内，退化为覆盖上界与可检测下界的中点（0.05 网格）。'
-        )
+    threshold, threshold_rule, lower, upper = select_threshold(max_cover, min_detectable)
 
     calibration = {
         'schema': _CALIBRATION_SCHEMA,
         'method': 'chi_square_bias_adjusted',
-        'created': date(2026, 11, 15).isoformat(),
+        'created': datetime.now(timezone(timedelta(hours=8))).date().isoformat(),
         'threshold': threshold,
         'threshold_rule': threshold_rule,
         'threshold_interval': {'lower': _round(lower), 'upper': _round(upper)},
@@ -182,12 +190,13 @@ def main() -> int:
         'limitations': list(LIMITATIONS),
     }
     calibration['calibration_id'] = calibration_id(calibration)
-    CALIBRATION_PATH.write_text(
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
         json.dumps(calibration, ensure_ascii=False, indent=2) + '\n',
         encoding='utf-8',
     )
 
-    print(f'写入 {CALIBRATION_PATH}')
+    print(f'写入 {args.output}')
     print(f'结构化覆盖样本 {len(cover_scores)} 个，最大分数 {max_cover:.4f}')
     print(f'可检测含密样本 {len(detectable)} 个，最小分数 {min_detectable:.4f}')
     print(f'已知漏报 {len(known_misses)} 个，分数 {[item["score"] for item in known_misses]}')

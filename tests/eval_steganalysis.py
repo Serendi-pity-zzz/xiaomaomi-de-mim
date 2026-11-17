@@ -12,11 +12,13 @@
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import io
 import json
 import math
 import sys
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from pathlib import Path
 
@@ -31,6 +33,7 @@ from core.steganalysis import (  # noqa: E402
     DEFAULT_CALIBRATION_FILENAME,
     LIMITATIONS,
     analyze,
+    environment_summary,
     load_calibration,
     rs_features,
 )
@@ -301,6 +304,24 @@ def carrier_group(row: dict) -> str:
     return 'builtin_cat_qr'
 
 
+def confusion_metrics(cover: dict, stego: dict) -> dict:
+    """未知单独计数，二分类指标只使用已判定样本，同时披露判定覆盖率。"""
+    fp, tp = cover['flagged'], stego['detected']
+    unknown_cover, unknown_stego = cover['inconclusive'], stego['inconclusive']
+    tn = cover['n'] - fp - unknown_cover
+    fn = stego['n'] - tp - unknown_stego
+    decided = tp + fn + fp + tn
+    total = cover['n'] + stego['n']
+    return {
+        'tp': tp, 'fn': fn, 'fp': fp, 'tn': tn,
+        'inconclusive_cover': unknown_cover, 'inconclusive_stego': unknown_stego,
+        'accuracy_decided': (tp + tn) / decided if decided else None,
+        'fpr_decided': fp / (fp + tn) if fp + tn else None,
+        'fnr_decided': fn / (fn + tp) if fn + tp else None,
+        'decision_coverage': decided / total if total else None,
+    }
+
+
 def summarize(cover_rows: list[dict], stego_rows: list[dict], scope_rows: list[dict],
               boundary_rows: list[dict], rs_rows: list[dict], calibration: dict) -> dict:
     def is_flagged(row):
@@ -343,13 +364,16 @@ def summarize(cover_rows: list[dict], stego_rows: list[dict], scope_rows: list[d
 
     return {
         'calibration': {
-            'path': str(CALIBRATION_PATH),
+            'path': CALIBRATION_PATH.relative_to(ROOT).as_posix(),
             'calibration_id': calibration['calibration_id'],
             'threshold': calibration['threshold'],
             'threshold_rule': calibration['threshold_rule'],
             'threshold_interval': calibration.get('threshold_interval'),
         },
-        'environment': calibration.get('environment'),
+        'evaluated_at': datetime.now(timezone(timedelta(hours=8))).isoformat(),
+        'environment': environment_summary(),
+        'calibration_environment': calibration.get('environment'),
+        'metric_notes': '混淆矩阵按载体和载荷条件分组，复用同类覆盖样本；未知单列。accuracy/fpr/fnr_decided 仅用已判定样本，结合 decision_coverage 阅读。TPR 为检出数/全部含密样本，含未知；1-TPR 是未检出率。内置猫区域重复，不能视为独立照片。',
         'covers': {
             key: {
                 'n': value['n'],
@@ -372,6 +396,7 @@ def summarize(cover_rows: list[dict], stego_rows: list[dict], scope_rows: list[d
                 'inconclusive': value['inconclusive'],
                 'tpr': value['detected'] / value['n'] if value['n'] else None,
                 'wilson95': wilson_interval(value['detected'], value['n']),
+                'confusion': confusion_metrics(cover_groups[key[1]], value),
             }
             for key, value in sorted(
                 stego_groups.items(),
@@ -428,6 +453,8 @@ def markdown_tables(summary: dict) -> str:
     lines.append(f"- 校准文件：`{calibration['path']}`")
     lines.append(f"- calibration_id：`{calibration['calibration_id']}`")
     lines.append(f"- 阈值：{calibration['threshold']}；依据：{calibration['threshold_rule']}")
+    lines.append(f"- 评估环境：{summary['environment']}")
+    lines.append(f"- 指标口径：{summary['metric_notes']}")
     lines.append('')
     lines.append('## 覆盖样本（误报）')
     lines.append('')
@@ -447,6 +474,23 @@ def markdown_tables(summary: dict) -> str:
         lines.append(f"| {item['condition']} | {item['carrier']} | {item['algorithm']} | "
                      f"{item['payload_bytes']} | {item['message_kind']} | {item['n']} | "
                      f"{item['detected']} | {item['inconclusive']} | {rate} |")
+    lines.append('')
+    lines.append('## 分条件混淆矩阵与准确率')
+    lines.append('')
+    lines.append('| 条件 | 载体 | 字节 | TP | FN | FP | TN | 未知（正常/含密） | 准确率¹ | 误报率¹ | 漏报率¹ | 判定覆盖率 |')
+    lines.append('|---|---|---:|---:|---:|---:|---:|---|---|---|---|---|')
+    def rate(value):
+        return 'n/a' if value is None else f'{value:.1%}'
+    for item in summary['stego']:
+        metrics = item['confusion']
+        lines.append(
+            f"| {item['condition']} | {item['carrier']} | {item['payload_bytes']} | "
+            f"{metrics['tp']} | {metrics['fn']} | {metrics['fp']} | {metrics['tn']} | "
+            f"{metrics['inconclusive_cover']}/{metrics['inconclusive_stego']} | "
+            f"{rate(metrics['accuracy_decided'])} | {rate(metrics['fpr_decided'])} | "
+            f"{rate(metrics['fnr_decided'])} | {rate(metrics['decision_coverage'])} |")
+    lines.append('')
+    lines.append('¹ 仅在已判定样本上计算；未知不算正确或负类。各行复用同类正常样本，不可跨行相加；低判定覆盖率下的高准确率不能代表整体能力。')
     lines.append('')
     lines.append('## 区域 vs 整图（全容量顺序 ASCII）')
     lines.append('')
@@ -474,6 +518,13 @@ def markdown_tables(summary: dict) -> str:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output-dir', type=Path, default=OUTPUT_DIR,
+                        help='输出目录，默认 outputs/steganalysis')
+    args = parser.parse_args()
+    output_dir = args.output_dir
     calibration = load_calibration(CALIBRATION_PATH)
     cover_rows, cover_images = build_cover_rows()
     stego_rows = build_stego_rows(cover_images)
@@ -485,20 +536,20 @@ def main() -> int:
     summary = summarize(cover_rows, stego_rows, scope_rows, boundary_rows, rs_rows, calibration)
     summary['png_roundtrip'] = roundtrip
 
-    write_csv(OUTPUT_DIR / 'eval_results.csv', cover_rows + stego_rows + scope_rows + boundary_rows, CSV_FIELDS)
-    write_csv(OUTPUT_DIR / 'rs_results.csv', rs_rows,
+    write_csv(output_dir / 'eval_results.csv', cover_rows + stego_rows + scope_rows + boundary_rows, CSV_FIELDS)
+    write_csv(output_dir / 'rs_results.csv', rs_rows,
               ['sample_id', 'source', 'payload_bytes', 'groups', 'd_m', 'd_neg',
                'r_m', 's_m', 'r_neg', 's_neg'])
-    (OUTPUT_DIR / 'summary.json').write_text(
+    (output_dir / 'summary.json').write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    (OUTPUT_DIR / 'summary.md').write_text(markdown_tables(summary) + '\n', encoding='utf-8')
+    (output_dir / 'summary.md').write_text(markdown_tables(summary) + '\n', encoding='utf-8')
 
     print(markdown_tables(summary))
     print('PNG 重存后分数一致：', all(item['same'] for item in roundtrip),
           [item['sample_id'] for item in roundtrip])
-    print(f'原始结果：{OUTPUT_DIR / "eval_results.csv"}')
-    print(f'RS 结果：{OUTPUT_DIR / "rs_results.csv"}')
-    return 0
+    print(f'原始结果：{output_dir / "eval_results.csv"}')
+    print(f'RS 结果：{output_dir / "rs_results.csv"}')
+    return 0 if all(item['same'] for item in roundtrip) else 1
 
 
 if __name__ == '__main__':
