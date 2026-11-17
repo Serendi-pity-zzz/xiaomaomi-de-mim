@@ -23,7 +23,7 @@ class TeamAlignmentTests(unittest.TestCase):
 
     def test_snapshots_exact(self):
         for item in json.loads((team.VENDOR / 'g_manifest.json').read_text()):
-            raw = (team.VENDOR / item['local_path']).read_bytes().replace(b'\r\n', b'\n')
+            raw = (team.VENDOR / item['local_path']).read_bytes()
             self.assertEqual(hashlib.sha256(raw).hexdigest(), item['annotated_sha256'])
             self.assertEqual(hashlib.sha256(raw[item['annotation_bytes']:]).hexdigest(), item['sha256'])
 
