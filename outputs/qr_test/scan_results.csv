@@ -1,0 +1,3 @@
+case_name,expected_text,decoded_text,scan_success,correction,qr_version
+case_1_H_level_with_cat,https://example.com/hello,https://example.com/hello,True,H,4
+case_2_Q_level_pure_qr,https://example.com/world,https://example.com/world,True,Q,3

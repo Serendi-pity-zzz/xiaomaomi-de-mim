@@ -1,0 +1,68 @@
+{
+  "carrier": "core.baseline.generate（MVP 二维码 + 猫咪条带并置，非 A 的艺术融合图）",
+  "public": "https://example.com/cat1",
+  "secret_bytes": 28,
+  "region": [
+    316,
+    32,
+    160,
+    200
+  ],
+  "capacity_bytes": 11960,
+  "image_size": [
+    496,
+    296
+  ],
+  "environment": {
+    "python": "3.13.14",
+    "Pillow": "13.0.0",
+    "qrcode": "8.2",
+    "pyzbar": "0.1.9"
+  },
+  "scan_before_embed": {
+    "status": "passed",
+    "decoded_texts": [
+      "https://example.com/cat1"
+    ],
+    "detail": "解码文本与公开原文一致"
+  },
+  "cases": [
+    {
+      "key_mode": "empty",
+      "protected_regions_unchanged": {
+        "qr_region": true,
+        "stripe_left_margin": true,
+        "stripe_right_margin": true
+      },
+      "png_roundtrip": true,
+      "secret_status": "passed",
+      "secret_recovered": true,
+      "scan_after_embed": {
+        "status": "passed",
+        "decoded_texts": [
+          "https://example.com/cat1"
+        ],
+        "detail": "解码文本与公开原文一致"
+      }
+    },
+    {
+      "key_mode": "keyed",
+      "protected_regions_unchanged": {
+        "qr_region": true,
+        "stripe_left_margin": true,
+        "stripe_right_margin": true
+      },
+      "png_roundtrip": true,
+      "secret_status": "passed",
+      "secret_recovered": true,
+      "scan_after_embed": {
+        "status": "passed",
+        "decoded_texts": [
+          "https://example.com/cat1"
+        ],
+        "detail": "解码文本与公开原文一致"
+      }
+    }
+  ],
+  "overall": "passed"
+}
