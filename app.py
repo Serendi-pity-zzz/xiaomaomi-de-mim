@@ -34,7 +34,7 @@ class Handler(BaseHTTPRequestHandler):
                 im=Image.open(io.BytesIO(base64.b64decode(obj['png'],validate=True)))
                 if im.format!='PNG' or im.width*im.height>4_000_000:
                     raise ValueError('仅接收不超过 400 万像素的 PNG')
-                result=service.extract(im,obj.get('key','')) if self.path.endswith('extract') else service.detect(im)
+                result=service.extract(im,obj.get('key','')) if self.path.endswith('extract') else service.detect(im,obj.get('method','chi_square'))
             else:
                 self.send_error(404); return
             status=200

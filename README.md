@@ -43,3 +43,11 @@ python -m unittest discover -s tests -v
 6. C–G 接入后用真实 CSV 展示检测与鲁棒性结论。
 
 答辩框架和成员提交要求见 docs。当前未宣称所有成员功能已经验收。
+
+## 团队模块
+
+Web 默认使用内置 CAT1 载体，消息编解码接入 B，检测接入 C 的卡方及 RS 辅助特征。A 的艺术融合和 G 的自适应载体目前通过独立脚本运行。
+
+D 的图像认证支持独立密钥、外置可信元数据和分块定位。运行 `python d_integrity_cli.py --help` 查看用法，见 `docs/d_mimi/接口交接.md`。Web 完整性页仍提供消息校验与参考图 RGB 对照。
+
+E/F 实验脚本与实测记录位于 `experiments/`。综合回归可使用 `python -B tests/g_run_tests.py`，实验依赖见 `experiments/g_requirements-research.txt`，D 的扫码联调测试另外需要 `zxing-cpp==3.1.1`。G 的归档鲁棒性副本与清单哈希存在差异，需由交付者核对原始快照。
